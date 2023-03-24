@@ -1,4 +1,5 @@
 import openai
+from typing import List, Dict
 
 with open('.env') as f:
     env = dict(line.strip().split('=') for line in f)
@@ -11,14 +12,24 @@ message_history = []
 
 def chat(inp, role="user"):
     message_history.append({"role": role, "content": f"{inp}"})
-    completion = openai.ChatCompletion.create(
-        model=model_name,
-        messages=message_history
-    )
-    reply_content = completion.choices[0].message.content
-    message_history.append(
-        {"role": "assistant", "content": f"{reply_content}"})
+    reply_content = call_chatgpt(messages=message_history).message.content
+    message_history.append({"role": "assistant", "content": "x"})
     return reply_content
+
+
+def call_chatgpt(
+        messages: List[Dict[str, str]],
+        temperature: int = 0,
+        model: str = "gpt-3.5-turbo"
+) -> str:
+    # temperature: What sampling temperature to use, between 0 and 2.
+    # Higher values like 0.8 will make the output more random,
+    # while lower values like 0.2 will make it more focused and deterministic.
+    return openai.ChatCompletion.create(
+        model=model,
+        temperature=temperature,
+        messages=messages
+    ).choices[0]
 
 
 # calculate the cost:
