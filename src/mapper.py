@@ -2,7 +2,7 @@ import re
 
 
 def message_to_sql(content):
-    content = extract_code_from_markdown(content)
+    content = extract_code_from_markdown(content).replace("\n", " ")
     return clean_message_content_to_get_sql(content)
 
 
