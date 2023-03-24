@@ -21,9 +21,11 @@ def chat(inp, role="user"):
     return reply_content
 
 
-# calculate the cost: "gpt-3.5-turbo" is "ChatGPT" $0.002 per 1k tokens
+# calculate the cost:
 def cost(reply_content):
-    tokens = len(reply_content)
+    # 1 token approximately equals 4 characters of text
+    tokens = len(reply_content) / 4
+    # "gpt-3.5-turbo" is "ChatGPT" $0.002 per 1k tokens
     cost = tokens / 1000 * 0.002
     return tokens, cost
 
