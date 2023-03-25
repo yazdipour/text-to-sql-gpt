@@ -14,7 +14,6 @@ def get_table_schemas(table_path) -> str:
     column_names = table_details["column_names_original"]
     column_types = table_details["column_types"]
 
-    custom_types_str_set = set()
     tables_str_list = []
     for table_inx, name in enumerate(table_names):
         tables_str = f"table name: {name}\n"

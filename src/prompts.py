@@ -4,10 +4,6 @@ from typing import List, Dict
 def get_few_shot_example_messages() -> List[dict]:
     examples = [
         {
-            "user": "Give me a list with all issue ids that are of type Bug",
-            "assistant": "SELECT issue_id FROM issue WHERE type = 'Bug'"
-        },
-        {
             "user": 'For issues  that belong to the "impl" component, give me their issue id, type and description',
             "assistant": 'SELECT T1.issue_id, T1.type, T1.description FROM issue AS T1 JOIN issue_component AS T2 ON T1.issue_id = T2.issue_id WHERE T2.component = "impl"'
         }
