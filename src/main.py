@@ -5,6 +5,7 @@ import chatgpt
 import openai
 import os
 import mapper
+from tqdm import tqdm
 
 envPath = os.path.join(os.path.dirname(__file__), '.env')
 with open(envPath) as f:
@@ -25,8 +26,8 @@ def chat(input):
     return mapper.message_to_sql(reply_content)
 
 
-def save_string_to_file(resultStr):
-    with open(os.path.join(os.path.dirname(__file__), "../data/result.txt"), "w", encoding="utf-8") as f:
+def save_string_to_file(resultStr, path):
+    with open(os.path.join(os.path.dirname(__file__), path), "a", encoding="utf-8") as f:
         f.write(resultStr)
 
 
@@ -34,8 +35,7 @@ def read_questions_list(path):
     questions = []
     with open(path, "r") as f:
         gold = json.load(f)
-        for item in gold:
-            questions.append(item['question'])
+        questions.extend(item['question'] for item in gold)
     return questions
 
 
@@ -53,16 +53,16 @@ sum_tokens = 0
 sum_costs = 0
 questions = read_questions_list(os.path.join(
     os.path.dirname(__file__), "../data/gold.json"))
-for q in questions[:2]:
-    print(f"Question: {q}")
+for q in tqdm(questions[:100]):
+    print(f"Q: {q}")
     res = chat(q)
-    print(f"Result: {res}")
+    print(f"A: {res}")
     tokens, cost = chatgpt.cost(res)
     sum_tokens += tokens
     sum_costs += cost
-    predictions.append(res)
+    predictions.append(f'{res}\t{db_name}\n')
 
-save_string_to_file(predictions.join(f"\t{db_name}\n"))
+save_string_to_file("".join(predictions), "../data/predictions.sql")
 
 print(f"Total tokens: {sum_tokens}")
 print(f"Total cost: {sum_costs}")
