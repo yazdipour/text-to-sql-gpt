@@ -53,10 +53,12 @@ sum_tokens = 0
 sum_costs = 0
 questions = read_questions_list(os.path.join(
     os.path.dirname(__file__), "../data/gold.json"))
-for q in tqdm(questions[:100]):
-    print(f"Q: {q}")
+for q in tqdm(questions):
+    # print(f"Q: {q}")
     res = chat(q)
-    print(f"A: {res}")
+    # trim spaces
+    res = res.strip()
+    # print(f"A: {res}")
     tokens, cost = chatgpt.cost(res)
     sum_tokens += tokens
     sum_costs += cost
