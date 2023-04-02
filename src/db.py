@@ -1,18 +1,14 @@
 import json
 
 
-def get_table_details(path) -> dict:
-    table_details = {}
-    with open(path, "r") as f:
-        table_details = json.load(f)
-    return table_details
+def get_table_schemas(table_path, db_id) -> str:
 
-
-def get_table_schemas(table_path) -> str:
-    table_details = get_table_details(table_path)[0]
-    table_names = table_details["table_names_original"]
-    column_names = table_details["column_names_original"]
-    column_types = table_details["column_types"]
+    with open(table_path, "r") as f:
+        tables = json.load(f)
+    table = next(table for table in tables if table["db_id"] == db_id)
+    table_names = table["table_names_original"]
+    column_names = table["column_names_original"]
+    column_types = table["column_types"]
 
     tables_str_list = []
     for table_inx, name in enumerate(table_names):
