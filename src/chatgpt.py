@@ -22,6 +22,5 @@ def call_chatgpt(
 def cost(reply_content):
     # 1 token approximately equals 4 characters of text
     tokens = len(reply_content) / 4
-    # "gpt-3.5-turbo" is "ChatGPT" $0.002 per 1k tokens
-    cost = tokens / 1000 * 0.002
+    cost = tokens / 1000 * 0.02
     return tokens, cost
