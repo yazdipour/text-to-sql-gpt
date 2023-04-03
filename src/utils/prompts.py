@@ -29,17 +29,20 @@ def get_few_shot_example_messages() -> List[dict]:
     return messages
 
 
-def get_system_prompt(schemas: str):
+def get_system_prompt(schemas: str, db_name: str):
     return [
         {
             "role": "system",
             "content": (
                 "You are a helpful assistant for generating syntactically correct read-only SQL to answer a given question."
-                "\n"
+                "\n" + "Database: " + db_name + "\n"
                 "The following are tables you can query:\n"
                 "---------------------\n" + schemas + "---------------------\n"
                 "Do not use IN keyword.\n"
-                "Do not use AS keyword if it is not necessary.\n"
+                "If it is necessary to use AS then use it like T1 T2 ..., but if the alias name is not going to be used in query again, then do not use.\n"
+                "Do not filter WHERE for being NOT NULL if it is not nessascry.\n"
+                "If in using COUNT(*) and COUNT(COLUMN) there is no difference then use COUNT(*).\n"
+                "Instead of <> use !=.\n"
                 " Write one valid SQL in markdown format.\n"
             ),
         },
