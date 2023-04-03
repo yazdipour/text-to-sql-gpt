@@ -58,21 +58,28 @@ HARDNESS = {
 }
 
 
-def remove_unused_aliases(sql_query):
-    # Extract all aliases in the query
-    aliases = re.findall(r"\bAS\s+(\w+)", sql_query, flags=re.IGNORECASE)
+def remove_unused_alias(query):  # sourcery skip: use-fstring-for-formatting
+    # Find all occurrences of "AS column_name" and get the column name
+    matches = re.findall(r'(?i)AS\s+([\w_]+)', query)
+    # If there are no matches, return the original query
+    if not matches:
+        return query
+    # Loop through each column name and check if it's used in the query
+    for col_name in matches:
+        # count the number of occurrences of the column name in the query
+        if query.count(col_name) == 1:
+            query = query.replace(f' AS {col_name}', '')
 
-    # Find all the aliases that are actually used in the query
-    used_aliases = set(re.findall(r"\b{}\.".format(
-        "|".join(aliases)) + r"\w+", sql_query, flags=re.IGNORECASE))
+    return query
 
-    # Remove any unused aliases from the query
-    for alias in aliases:
-        if alias not in used_aliases:
-            sql_query = re.sub(r"\bAS\s+{}\b".format(alias),
-                               "", sql_query, flags=re.IGNORECASE)
 
-    return sql_query
+def add_as_keyword(query):
+    # Match table aliases without AS keyword after FROM or JOIN, followed by a space and a word character
+    pattern = re.compile(
+        r'(?<=FROM|JOIN)\s+(\w+)\s+(?!\w+\s*AS\s)(\b\w+\b)(?!\s*AS\s)(?!\()(\s*WHERE|\s*ON|\s*GROUP BY|\s*ORDER BY|\s*LIMIT|\s*HAVING|\s*$)', re.IGNORECASE)
+    updated_query = re.sub(pattern, r' \1 AS \2\3', query)
+
+    return updated_query
 
 
 def condition_has_or(conds):
@@ -539,8 +546,7 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
     failures = []
 
     for level in levels:
-        scores[level] = {'count': 0, 'partial': {}, 'exact': 0.}
-        scores[level]['exec'] = 0
+        scores[level] = {'count': 0, 'partial': {}, 'exact': 0.0, 'exec': 0}
         for type_ in partial_types:
             scores[level]['partial'][type_] = {
                 'acc': 0., 'rec': 0., 'f1': 0., 'acc_count': 0, 'rec_count': 0}
@@ -548,10 +554,13 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
     eval_err_num = 0
     for index, (p, g) in enumerate(zip(plist, glist)):
         p_str = p[0]
-        p_str = remove_unused_aliases(p_str)
+        # My filters
+        p_str = remove_unused_alias(p_str)
+        p_str = p_str.replace("INNER JOIN", "JOIN")
+        p_str = add_as_keyword(p_str)
         g_str, db = g
         db_name = db
-        db = os.path.join(db_dir, db, db + ".sqlite")
+        db = os.path.join(db_dir, db, f"{db}.sqlite")
         schema = Schema(get_schema(db))
         g_sql = get_sql(schema, g_str)
         hardness = evaluator.eval_hardness(g_sql)
@@ -581,7 +590,7 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
                 "where": []
             }
             eval_err_num += 1
-            print("eval_err_num:{}".format(eval_err_num))
+            print(f"eval_err_num:{eval_err_num}")
 
         # rebuild sql for value evaluation
         kmap = kmaps[db_name]
@@ -597,8 +606,7 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
         current_pred = p_str
 
         if etype in ["all", "exec"]:
-            exec_score = eval_exec_match(db, p_str, g_str, p_sql, g_sql)
-            if exec_score:
+            if exec_score := eval_exec_match(db, p_str, g_str, p_sql, g_sql):
                 scores[hardness]['exec'] += 1.0
                 scores['all']['exec'] += 1.0
                 current_pred += " _EX"
@@ -611,28 +619,17 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
                 current_pred += " _EM"
 
             # print all queries
-            print("{} {} pred: {}".format(index, hardness, p_str))
-            print("{} {} gold: {}".format(index, hardness, g_str))
+            print(f"{index} {hardness} pred: {p_str}")
+            print(f"{index} {hardness} gold: {g_str}")
             print("")
 
             scores[hardness]['exact'] += exact_score
             scores['all']['exact'] += exact_score
             for type_ in partial_types:
-                if partial_scores[type_]['pred_total'] > 0:
-                    scores[hardness]['partial'][type_]['acc'] += partial_scores[type_]['acc']
-                    scores[hardness]['partial'][type_]['acc_count'] += 1
-                if partial_scores[type_]['label_total'] > 0:
-                    scores[hardness]['partial'][type_]['rec'] += partial_scores[type_]['rec']
-                    scores[hardness]['partial'][type_]['rec_count'] += 1
-                scores[hardness]['partial'][type_]['f1'] += partial_scores[type_]['f1']
-                if partial_scores[type_]['pred_total'] > 0:
-                    scores['all']['partial'][type_]['acc'] += partial_scores[type_]['acc']
-                    scores['all']['partial'][type_]['acc_count'] += 1
-                if partial_scores[type_]['label_total'] > 0:
-                    scores['all']['partial'][type_]['rec'] += partial_scores[type_]['rec']
-                    scores['all']['partial'][type_]['rec_count'] += 1
-                scores['all']['partial'][type_]['f1'] += partial_scores[type_]['f1']
-
+                _extracted_from_evaluate_102(
+                    partial_scores, type_, scores, hardness)
+                _extracted_from_evaluate_102(
+                    partial_scores, type_, scores, 'all')
             entries.append({
                 'predictSQL': p_str,
                 'goldSQL': g_str,
@@ -674,6 +671,17 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
                         scores[level]['partial'][type_]['rec'] + scores[level]['partial'][type_]['acc'])
 
     print_scores(scores, etype)
+
+
+# TODO Rename this here and in `evaluate`
+def _extracted_from_evaluate_102(partial_scores, type_, scores, arg3):
+    if partial_scores[type_]['pred_total'] > 0:
+        scores[arg3]['partial'][type_]['acc'] += partial_scores[type_]['acc']
+        scores[arg3]['partial'][type_]['acc_count'] += 1
+    if partial_scores[type_]['label_total'] > 0:
+        scores[arg3]['partial'][type_]['rec'] += partial_scores[type_]['rec']
+        scores[arg3]['partial'][type_]['rec_count'] += 1
+    scores[arg3]['partial'][type_]['f1'] += partial_scores[type_]['f1']
 
 
 def eval_exec_match(db, p_str, g_str, pred, gold):
@@ -757,11 +765,11 @@ def build_valid_col_units(table_units, schema):
     col_ids = [table_unit[1]
                for table_unit in table_units if table_unit[0] == TABLE_TYPE['table_unit']]
     prefixs = [col_id[:-2] for col_id in col_ids]
-    valid_col_units = []
-    for value in schema.idMap.values():
-        if '.' in value and value[:value.index('.')] in prefixs:
-            valid_col_units.append(value)
-    return valid_col_units
+    return [
+        value
+        for value in schema.idMap.values()
+        if '.' in value and value[: value.index('.')] in prefixs
+    ]
 
 
 def rebuild_col_unit_col(valid_col_units, col_unit, kmap):
@@ -885,7 +893,7 @@ def build_foreign_key_map(entry):
         if col_orig[0] >= 0:
             t = tables_orig[col_orig[0]]
             c = col_orig[1]
-            cols.append("__" + t.lower() + "." + c.lower() + "__")
+            cols.append(f"__{t.lower()}.{c.lower()}__")
         else:
             cols.append("__all__")
 
@@ -918,10 +926,7 @@ def build_foreign_key_map(entry):
 def build_foreign_key_map_from_json(table):
     with open(table) as f:
         data = json.load(f)
-    tables = {}
-    for entry in data:
-        tables[entry['db_id']] = build_foreign_key_map(entry)
-    return tables
+    return {entry['db_id']: build_foreign_key_map(entry) for entry in data}
 
 
 if __name__ == "__main__":
