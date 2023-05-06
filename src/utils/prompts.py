@@ -56,3 +56,10 @@ def get_user_prompt(natural_language_query):
                 f"Generate syntactically correct read-only SQL to answer the following question: {natural_language_query}"
         )
     }
+
+
+def get_assistant_prompt(history):
+    return {
+        "role": "assistant",
+        "content": history
+    }
