@@ -1,4 +1,4 @@
-from seq2seq.eval_spider.process_sql import get_schema, get_sql, Schema
+from process_sql import get_schema, Schema, get_sql
 
 import json
 import os
@@ -10,12 +10,13 @@ def format_gold(json_filename, gold_filename):
     """
     gold_queries = []
 
-    with open(json_filename, "r") as input_file:
+    with open(json_filename, "r", encoding='utf-8') as input_file:
         all_instances = json.loads(input_file.read())
-        gold_queries.extend(f"{p['query']}\t{p['db_id']}" for p in all_instances)
+        gold_queries.extend(
+            f"{p['query']}\t{p['db_id']}" for p in all_instances)
     out_filename = os.path.join(os.path.dirname(json_filename), gold_filename)
 
-    with open(out_filename, "w") as output_file:
+    with open(out_filename, "w", encoding='utf-8') as output_file:
         for q in gold_queries:
             output_file.write(q + "\n")
 
@@ -38,8 +39,8 @@ def format_sql_field(json_filename, db_dir):
 
 
 if __name__ == "__main__":
-    json_filename = "/app/dataset_files/seoss/gold_v1.json"
-    db_dir = "/app/dataset_files/seoss/database"
-    gold_filename = "gold_v1.sql"
+    json_filename = "../../data/seoss/gold_pig_not_specific.json"
+    db_dir = "../../data/seoss/database"
+    gold_filename = "gold_pig_specific.sql"
     format_sql_field(json_filename, db_dir)
     format_gold(json_filename, gold_filename)

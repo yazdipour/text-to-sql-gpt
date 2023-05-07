@@ -1,0 +1,931 @@
+select issue_id from issue where type = "Georgia" _EM
+select issue_id, count(*) from issue group by issue_id
+select issue_id from issue
+select issue_id from issue where type = "buggy" _EM
+select issue_id from issue where type = "Georgia" _EM
+select issue_id from issue where type = "Georgia" _EM
+select issue_id from issue where type = "Bug" _EX _EM
+select status from issue where status = "Closed" or status = "Resolved"
+select issue_id, resolved_date from issue union select issue_id from issue_fix_version
+select * from issue where resolved_date_zoned = "null" or resolved_date_zoned = "patchable"
+select issue_id, resolved_date_zoned from issue except select issue_id from issue_fix_version
+select status from issue where status = "Closed" or status = "Resolved"
+select status from issue where status = "Closed" or status = "Resolved"
+select status from issue where status = "Cancelled" or status = "Resolved"
+select t1.issue_id, t1.type, t1.description from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = "impl" _EX _EM
+select t1.issue_id, t1.type, t1.description from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = (select t2.component from issue_component as t3 join issue_component as t4 on t3.component = t4.component where t3.component = 'Female')
+select t1.issue_id, t1.type, t1.description from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'impl' _EX _EM
+select t1.issue_id, t1.type, t1.description from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'impl' _EX _EM
+select t1.issue_id, t1.type, t1.description from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = "impl" _EX _EM
+select t1.issue_id, t1.type, t1.description from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = "impl" _EX _EM
+select issue_id, type, description from issue where component
+select issue_id from issue where updated_date between '2017-03-22' and '2017-03-22' _EM
+select issue_id from issue where updated_date_zoned = '2017-03-22' intersect select issue_id from issue where updated_date_zoned = '2017-03-23'
+select issue_id from issue where updated_date_zoned >= '2017-03-22' and updated_date_zoned <= '2017-03-23'
+select issue_id from issue where updated_date_zoned >= '2017-03-22' and updated_date_zoned <= '2017-03-23'
+select issue_id from issue where updated_date between '2017-03-22' and '2017-03-23' _EX _EM
+select issue_id from issue where updated_date = '2017-03-22' intersect select issue_id from issue where updated_date = '2017-03-23'
+select issue_id from issue where updated_date = '2017-03-22' intersect select issue_id from issue where updated_date = '2017-03-23'
+select * from issue where issue_id = 'PIG-3599' _EX _EM
+select name from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id join issue_component as t4 on t3.issue_id = t4.issue_id
+select * from issue AS where
+select * from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t1.
+select * from issue where issue_id = 'PIG-3599' _EX _EM
+select * from issue where issue_id = 'PIG-3599' _EX _EM
+select * from issue where issue_id = 'PIG-3599' _EX _EM
+select issue_id from issue where assignee = 'Daniel Ward' and status = 'Open'
+select * from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.assignee = "Daniel Ward"
+select t1.issue_id from issue as t1 join
+select t2.name from issue_comment as t1 join issue_comment AS as
+select t1.issue_id from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.assignee = 'Daniel' and t2.status = 'Open'
+select * from issue where assignee = 'Daniel Ward' and status = 'Open' _EX _EM
+select distinct t1.assignee from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.status = 'Open'
+select status from issue where status = "In Progress"
+select status from issue where created_date_zoned >= "null"
+select distinct t1.issue_id from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id
+select status from issue group by status having count(*) >= 1
+select status from issue where status = "In Progress"
+select status from issue where status = "In Progress"
+select status from issue where status = "In Progress"
+select t1.issue_id from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join
+select * from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join
+select * from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t1.reporter_username = "John Stark"
+select * from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join
+select t1.issue_id from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.reporter_username = "John Stark" and t2.type = "bug"
+select t1.issue_id from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join
+select t1.issue_id from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.reporter_username = "John Stark" intersect select t1.issue_id from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.type = "Bug"
+select issue_id from issue where priority = "Blocker" or priority = "Critical"
+select issue_id from issue union select issue_id from issue_component where issue_id not in (select issue_id from issue_component)
+select status from issue union select status from issue where issue_id not in (select issue_id from issue_fix_version)
+select issue_id from issue union select issue_id from issue_component
+select issue_id from issue where priority = "Blocker" or priority = "Critical"
+select issue_id from issue where priority = "Blocker" or priority = "Critical"
+select issue_id from issue where priority = "Blocker" or priority = "Critical"
+select issue_id from issue where updated_date > '2017-03-28'
+select * from issue where updated_date_zoned > '2017-03-28' _EX
+select * from issue where updated_date > '2017-03-28' _EX _EM
+select * from issue where updated_date_zoned > '2017-03-28' _EX
+select issue_id from issue where updated_date > '2017-03-28'
+select issue_id from issue where updated_date > '2017-03-28'
+select issue_id from issue where updated_date > '2017-03-28'
+select distinct t1.assignee from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.assignee = "Daniel Ward"
+select distinct * from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join
+select distinct * from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join
+select * from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join
+select distinct t2.name from issue as t1 join issue_comment on t1.issue_id = t2.issue_id join
+select distinct t1.assignee from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join
+select distinct t1.assignee from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.assignee = "Daniel Ward"
+select distinct issue_id from issue_attachment
+select distinct issue_id from issue_attachment
+select distinct issue_id from issue_attachment
+select distinct issue_id from issue_attachment
+select * from issue_attachment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t2.issue_id in (select issue_id from issue_attachment)
+select * from issue_attachment
+select * from issue_attachment
+select issue_id, sum(summary) from issue where type = 'Bug'
+select issue_id, sum(resolution) from issue where issue_id not in (select issue_id from issue_fix_version)
+select issue_id, sum(summary) from issue group by issue_id
+select issue_id, sum(summary) from issue
+select issue_id, sum(summary) from issue where type = "bug"
+select issue_id, sum(summary) from issue where type = "Georgia"
+select issue_id, sum(summary) from issue where type = "Georgia"
+select issue_id, description from issue where type = 'Bug' _EX _EM
+select issue_id, description from issue
+select issue_id, description from issue order by issue_id, description
+select issue_id, description from issue where type = "Georgia" _EM
+select issue_id, description from issue where type = "Georgia" _EM
+select issue_id, description from issue where type = "bug" _EM
+select issue_id, description from issue where type = "Georgia" _EM
+select t1.issue_id from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'Gruber' intersect select t1.issue_id from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'Parser'
+select t1.issue_id from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'Gruber' intersect select t1.issue_id from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'Parser'
+select t1.issue_id from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'Gruber' intersect select t1.issue_id from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'Parser'
+select t1.issue_id from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'Gruber' intersect select t1.issue_id from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'Parser'
+select * from issue_component where component = "grunt" intersect select * from issue_component where component = "parser"
+select * from issue_component where component = "grunt" intersect select * from issue_component where component = "parser"
+select * from issue_component where component = "grunt" intersect select * from issue_component where component = "parser"
+select status from issue where issue_id = 'PIG-3599' _EX _EM
+select status from issue where issue_id = "PIG-3599" _EX _EM
+select status from issue where issue_id = 'PIG-3599' _EX _EM
+select status from issue where issue_id = "PIG-3599" _EX _EM
+select status from issue where issue_id = 'PIG-3599' _EX _EM
+select status from issue where issue_id = 'PIG-3599' _EX _EM
+select status from issue where issue_id = 'PIG-3599' _EX _EM
+select issue_id, priority from issue where type = 'Bug' _EX _EM
+select issue_id, priority from issue
+select issue_id, priority from issue group by issue_id order by count(*) asc
+select issue.issue_id, priority from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id
+select issue_id, priority from issue where type = "bug" _EM
+select issue_id, priority from issue where type = "Georgia" _EM
+select issue_id, priority from issue where type = "Georgia" _EM
+select issue_id, status, resolution, summary, description from issue where type = 'Bug' and priority = 'Major' _EX _EM
+select issue_id, status, resolution, summary from issue
+select issue_id, status, sum(resolution) from issue
+select issue_id, status, sum(resolution) from issue group by issue_id
+select issue_id, status, resolution, summary, description from issue where type = "bug" and priority = "major" _EM
+select issue_id, status, resolution, summary from issue where type = "bug" intersect select issue_id, status, resolution from issue group by issue_id having count(*) >= 1
+select issue_id, status, resolution from issue order by issue_id, status, description
+select issue_id, type, priority from issue where status = 'Open' order by type, priority _EX _EM
+select issue_id, status, resolution, summary from issue
+select issue_id, status, sum(resolution) from issue
+select issue_id, status, sum(resolution) from issue group by issue_id
+select issue_id, type, priority from issue where status = "open" order by type, priority _EM
+select t1.issue_id, t1.type, t1.priority from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t1.status = 'Open' order by t1.type, t1.priority
+select issue_id, type, priority from issue where status = 'Open' order by type, priority _EX _EM
+select t1.username, t1.field from code_change as t2 join issue_changelog as t3 on t1.change_
+select t1.name, t1.change_type from code_change as t2 join issue_fix_version as t3 on t1.change_type = t3.
+select name, commit_hash from code_change as t1 join issue_fix_version as t2 on t1.
+select t1.name, t1.author from code_change as t2 join change_set as t3 join issue_fix_version as t4 on t1.issue_id = (select t4.issue_id from code_change as t5 join issue_fix_version as t6 on t3.issue_i
+select t1.field, t1.name from issue_fix_version as t2 join issue_fix_version as t3 on t1.fix_version = t3.fix_version
+select t1.field, t1.username from issue_changelog as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.fix_version = 0.321 _EM
+select t1.field, t1.name from issue_fix_version as t2 join issue_fix_version as t3 on t1.fix_version = t3.fix_version
+select issue_id, type, summary, description from issue where status = 'Open' and priority = 'Major' _EX _EM
+select issue_id, type, summary, description from issue where priority = 'Major'
+select issue_id, type, summary, description from issue
+select issue_id, type, sum(summary) from issue
+select issue_id, type, summary, description from issue where priority = "Major"
+select issue_id, type, summary, description from issue where status = 'Open' and priority = 'Major' _EX _EM
+select issue_id, type, summary, description from issue where status = "open" and priority = "major" _EM
+select distinct assignee from issue where type = "Bug" _EX _EM
+select distinct t1.assignee_username from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id
+select distinct t1.assignee_username from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue as t3 on t2.issue_id = t3.issue_id where t3.type = "bug"
+select distinct t1.assignee_username from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue as t3 on t2.issue_id = t3.issue_id where t3.type = "bug"
+select distinct assignee from issue where type = "Bug" _EX _EM
+select distinct assignee from issue where type = "bug" _EM
+select distinct assignee from issue where type = "bug" _EM
+select author, count(*) from change_set group by author _EX _EM
+select count(*), t1.name from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id group by t1.name
+select count(*), commit_hash from change_set group by commit_hash
+select count(*), t1.name from
+select t1.name, count(*) from
+select author, count(*) from change_set group by author _EX _EM
+select t1.name, count(*) from issue_comment as t1
+select commit_hash, message from change_set _EX _EM
+select issue_id, message from issue_comment
+select t1.git_repository_id, t2.description from git_repository as t1 join issue as t2 on t2.issue_id = t1.git_repository_id
+select commit_hash, message from change_set _EX _EM
+select commit_hash, message from
+select commit_hash, message from change_set _EX _EM
+select commit_hash, message from change_set _EX _EM
+select t1.assignee_username from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.issue_id = "PIG-3599"
+select t1.author_email from issue as t2 join issue_fix_version as t3 on t1.issue_id = t3.issue_id join issue_component as t4 on t3.issue_id = t4.issue_id
+select t1.assignee_username from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.issue_id = "PIG-3599"
+select assignee_username from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.p
+select assignee from issue where issue_id = "PIG-3599" _EX _EM
+select assignee from issue where issue_id = "PIG-3599" _EX _EM
+select t1.assignee_username from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.issue_id = "PIG-3599"
+select count(*) from issue where type = 'Improvement' _EX _EM
+select count(*) from
+select count(*) from issue
+select count(*) from jira_repository
+select count(*) from issue where type = "Improvement" _EX _EM
+select count(*) from issue where type = 'New type' _EM
+select count(*) from issue where type = "Improvement" _EX _EM
+select type from issue group by type order by count(*) desc limit 1 _EX _EM
+select type from issue group by type order by count(*) desc limit 1 _EX _EM
+select type from issue group by type order by count(*) desc limit 1 _EX _EM
+select type from issue group by type order by count(*) desc limit 1 _EX _EM
+select type from issue group by type order by count(*) desc limit 1 _EX _EM
+select type from issue group by type order by count(*) desc limit 1 _EX _EM
+select type from issue group by type order by count(*) desc limit 1 _EX _EM
+select count(*) from issue where priority = "blocker" or priority = "critical" _EM
+select count(*) from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id group by t3.issue_id having count(*) >= 1
+select count(*) from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id group by t3.issue_id having count(*) >= 1
+select count(*) from issue where priority = "blocker" or priority = "critical" _EM
+select count(*) from issue where priority = "Blocker" or priority = "critical" _EM
+select count(*) from issue where priority = "blocker" or priority = "critical" _EM
+select count(*) from issue where priority = "blocker" or priority = "critical" _EM
+select file_path, count(*) from code_change group by file_path order by count(*) desc
+select file_path, count(*) from code_change group by file_path order by count(*) desc limit 5
+select file_path, count(*) from code_change group by file_path order by count(*) desc limit 5
+select file_path, count(*) from code_change group by file_path order by count(*) desc
+select file_path, count(*) from code_change group by file_path order by count(*) desc
+select file_path, count(*) from code_change group by file_path order by count(*) desc
+select file_path, count(*) from code_change group by file_path order by count(*) desc
+select assignee from issue group by assignee having count(*) = 1 _EX
+select assignee_username from issue group by assignee_username having count(*) = 1
+select t2.name from issue_comment as t1 join issue_comment AS as
+select assignee_username from issue group by assignee_username having count(*) = 1
+select assignee from issue group by assignee having count(*) = 1 _EX
+select count(*) from issue group by issue_id having count(*) = 1
+select assignee_username from issue group by assignee_username having count(*) = 1
+select count(*), assignee from issue where status = "Open" group by assignee order by count(*) desc
+select t2.author, count(*) from issue as t1 join
+select t1.name, count(*), t1.name from
+select assignee, count(*) from issue group by assignee
+select assignee, count(*) from issue where status = "Open" group by assignee order by count(*) desc limit 1
+select assignee, count(*) from issue where status = "Open" group by assignee order by count(*) desc limit 1
+select count(*), t1.assignee_username from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.status = "Open" group by t1.assignee_username order by count(*) desc limit 1
+select t1.assignee, count(*) from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.status = "Open" group by t1.assignee
+select count(*), t1.assignee_username from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.assignee_username
+select count(*), t1.assignee_username from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.assignee_username
+select assignee, count(*) from issue group by assignee
+select count(*), t1.assignee from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.status = "Open" group by t1.assignee
+select count(*), t1.assignee from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.status = "Open" group by t1.assignee
+select count(*), t1.assignee from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.status = "Open" group by t1.assignee
+select status, count(*) from issue group by status
+select status, count(*) from issue group by status
+select status from issue group by status order by count(*) asc
+select status, count(*) from issue group by status
+select count(*), status from issue group by status
+select status, count(*) from issue group by status
+select status, count(*) from issue group by status
+select resolution, count(*) from issue group by resolution _EX _EM
+select resolution, count(*) from issue group by resolution _EX _EM
+select count(*), t1.type from issue as t1 join code_change as t2 on t1.issue_id = t2.issue_id
+select count(*), t1.type from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id group by t1.type
+select resolution, count(*) from issue group by resolution _EX _EM
+select resolution, count(*) from issue group by resolution _EX _EM
+select resolution, count(*) from issue group by resolution _EX _EM
+select source_issue_id, target_issue_id from issue_link where name like '%duplicate%' _EX
+select issue_id from issue group by issue_id having count(*) = 1
+select distinct issue_id from issue group by issue_id having count(*) >= 2
+select name from issue_link where name like '%duplicate%'
+select source_issue_id, target_issue_id from issue_link where name like '%duplicate%' _EX
+select source_issue_id, target_issue_id from issue_link where name = "Duplicate" _EX _EM
+select source_issue_id, target_issue_id from issue_link where name like '%duplicate%' _EX
+select t1.name from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id where t2.name = "Blocker"
+select issue_id from issue group by issue_id having count(*) = 1
+select issue_id from issue group by issue_id having count(*) >= 2
+select t1.name from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id where t2.name like '%blocker%'
+select source_issue_id, target_issue_id from issue_link where name like '%blocker%' _EX
+select source_issue_id, target_issue_id from issue_link where name = "Blocker" _EX _EM
+select source_issue_id, target_issue_id from issue_link where name like '%blocker%' _EX
+select count(*) from issue where status = 'Open' _EX _EM
+select count(*) from issue
+select count(*) from issue
+select count(*) from issue where resolved_date!= "null"
+select count(*) from issue where status = "Open" _EX _EM
+select count(*) from issue where status = 'Open' _EX _EM
+select count(*) from issue where status = "Open" _EX _EM
+select t1.name from issue_link as t1 join issue_link as t2 on t1.
+select issue_id from issue union select issue_id from issue_component where issue_id not in (select issue_id from issue_component)
+select issue_id from issue group by issue_id having count(*) >= 1
+select * from issue where issue_id not in (select issue_id from issue_fix_version)
+select status from issue where priority = "blocker" or priority = "critical"
+select issue_id from issue where priority = "Blocker" or priority = "Critical"
+select t1.issue_id from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue as t3 on t2.issue_id = t3.issue_id where t3.priority = "Blocker" union select t1.issue_id from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue as t3 on t2.issue_id = t3.issue_id where t3.priority = "Critical"
+select count(*), t1.assignee_username from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.status = "Resolved" group by t1.assignee_username
+select t1.author, count(*) from issue as t2 join issue_fix_version as t3 on t1.issue_id = t3.issue_id join issue_component as t4 on t3.issue_id = t4.issue_id
+select count(*), min(resolved_date_zoned) from issue group by min(resolved_date_zoned)
+select count(*), t1.assignee_username from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id group by t1.assignee_username
+select count(*), assignee from issue where resolved_date = (select resolved_date from issue group by resolved_date order by count(*) desc limit 1)
+select assignee, count(*) from issue where status = "Resolved" group by assignee _EX _EM
+select assignee, count(*) from issue where status = "Resolved" group by assignee _EX _EM
+select t2.display_name, t1.me
+select t1.name, t2.name from issue_comment as t1
+select t1.assignee, t2.description from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t1.issue_id = "PIG-3599"
+select t1.assignee_username, t1.resolution from issue_comment as t2 join issue_comment as t3 on t2.issue_id = t3.issue_
+select t2.display_name, t1.me
+select t2.display_name, t1.message from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.issue_id = "PIG-3599"
+select t2.display_name, t1.message from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t2.issue_id = 'PIG-3592'
+select distinct * from issue_comment as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.issue_id = 'PIG-3592'
+select * from issue where issue_id = "PIG-3592"
+select t2.name from issue_fix_version as t1 join issue_comment AS as
+select t2.assignee_
+select t1.name from issue_comment as t2 join issue_fix_version as t3 on t1.issue_id = t3.issue_id
+select t1.author from change_set as t1 join issue_comment as t2 on t1.issue_
+select distinct * from issue_comment as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.issue_id = 'PIG-3592'
+select count(*) from issue_component where component = 'impl'
+select count(*) from issue_component where component = 'impl'
+select count(*) from issue_component where component = 'impl'
+select count(*) from issue_component where component = 'impl'
+select count(*) from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t1.component = "impl"
+select count(*) from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = "impl"
+select count(*) from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = 'impl'
+select distinct t1.assignee_username from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = "impl"
+select distinct t1.name from issue_component as t2 join issue_component as t3 on t1.issue_id = t3.issue_id join
+select t1.author from issue_comment as t2 join issue_component as t3 on t1.issue_id = t3.issue_id
+select t1.assignee_username from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = "imp"
+select distinct assignee_username from issue_component as t1 join issue_component as t2 on t1.component = t2.comp
+select distinct assignee from
+select distinct t1.assignee_username from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id where t2.component = "impl"
+select reporter from issue order by reporter_username asc
+select t1.reporter_username from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.reporter_username order by count(*) desc limit 1
+select t1.reporter_username, t2.issue_id from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id
+select t1.name, t2.issue_id from issue_comment AS as
+select reporter, issue_id from issue order by reporter asc _EX _EM
+select reporter, issue_id from issue order by reporter _EX _EM
+select t1.reporter_username, t2.issue_id from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id order by t1.reporter_username asc
+select distinct field from code_change as t1 join issue_fix_version as t2 on t1.
+select t1.name from code_change as t2 join issue_fix_version as t3 join issue_fix_version as t4 on t1.issue_id = t3.issue_id and t4.issue_id = t4.issue_id join code_change as t5 on t3.change_
+select * from code_change as t1 join issue_fix_version as t2 on t2.fix_version = 1 join code_change as t3 on t2.fix_version = 1 group by t2.fix_version having count(*) >= 1
+select * from code_change where commit_hash = "0.12.1"
+select distinct field from issue_changelog as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.fix_version = 0.321 _EM
+select distinct field from issue_fix_version
+select distinct field from code_change as t1 join issue_fix_version as t2 on t1.
+select issue_id, assignee from issue where resolved_date between '2014-09-08' and '2014-09-12' _EX _EM
+select issue_id, assignee from issue where resolved_date between "2014-09-08" and "2014-09-12" _EX _EM
+select t1.issue_id, t2.name from issue as t1 join issue_fix_version on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id join issue_component as t4 on t3.issue_id = t4.issue_
+select issue_id, assignee_username from issue where resolved_date_zoned between "2014-09-08" and "2014-09-12"
+select issue_id, assignee from issue where resolved_date between "2014-09-08" and "2014-09-12" _EX _EM
+select t1.issue_id, t2.assignee from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t1.resolved_date between '2014-09-08' and '2014-09-12' _EX
+select issue_id, assignee from issue where resolved_date between '2014-09-08' and '2014-09-12' _EX _EM
+select file_path from code_change AS where
+select t1.file_path from code_change as t1 join
+select t1.file_path from code_change as t1 join
+select distinct * from issue_fix_version as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.fix_version = 0.321
+select distinct t1.file_path from code_change as t1 join issue_fix_version as t2 on t1.
+select t1.file_path from code_change as t1 join issue_fix_version as t2 on t1.change_
+select distinct t1.file_path from code_change as t1 join issue_fix_version as t2 on t1.
+select * from issue where created_date < "2014-09-12" _EX _EM
+select * from issue where created_date < "2014-09-12" _EX _EM
+select status from issue where created_date < "2014-09-12"
+select * from issue where created_date < "2014-09-12" _EX _EM
+select * from issue where created_date < "2014-09-12" _EX _EM
+select * from issue where created_date < "2014-09-12" _EX _EM
+select issue_id from issue where created_date < "2014-09-12"
+select * from issue where created_date = "2017-03-28" _EX _EM
+select * from issue where created_date = "2017-03-28" _EX _EM
+select * from issue where created_date = "2017-03-28" _EX _EM
+select * from issue where updated_date_zoned = "2017-03-28"
+select * from issue where created_date = "2017-03-28" _EX _EM
+select issue_id from issue where created_date = "2017-03-28"
+select issue_id from issue where created_date = '2017-03-28'
+select issue_id from issue where resolved_date = "2013-10-23" _EX _EM
+select issue_id from issue where resolved_date = "2013-10-23" _EX _EM
+select issue_id from issue where resolution = '2013-10-23'
+select issue_id from issue where resolved_date = "2013-10-23" _EX _EM
+select issue_id from issue where resolved_date = '2013-10-23' _EX _EM
+select issue_id from issue where resolved_date = '2013-10-23' _EX _EM
+select issue_id from issue where resolved_date = '2013-10-23' _EX _EM
+select assignee from issue where resolved_date between '2015-03-01' and '2015-03-31' group by assignee having count(*) >= 3 _EX
+select t2.name from issue_fix_version as t1 join issue_comment AS as
+select count(*) from issue where resolved_date - resolved_date between '2015-03-01' and '2015-03-31' group by resolution having count(*) >= 3
+select assignee_username from issue where resolved_date between '2015-03-01' and '2015-03-31' group by assignee_username having count(*) >= 3
+select issue_id, count(*) from issue where resolved_date between '2015-03-01' and '2015-03-31' group by issue_id having count(*) >= 3
+select count(*), assignee from issue group by assignee having count(*) >= 3 intersect select assignee from issue where resolved_date between '2015-03-01' and '2015-03-31'
+select assignee from issue group by assignee having count(*) >= 3 intersect select assignee from issue group by assignee having count(*) <= '2015-03-01'
+select count(*) from issue where resolved_date < "2013-10-27" _EX _EM
+select count(*) from issue where resolved_date < "2013-10-27" _EX _EM
+select count(*) from issue where resolved_date < "2013-10-27" _EX _EM
+select count(*) from issue where resolved_date < "2013-10-27" _EX _EM
+select count(*) from issue where resolved_date < "2013-10-27" _EX _EM
+select count(*) from issue where resolved_date < "2013-10-27" _EX _EM
+select count(*) from issue where resolved_date < "2013-10-27" _EX _EM
+select issue_id from issue where created_date > '2017-05-31'
+select * from issue where created_date > '2017-05-31' _EX _EM
+select * from issue where updated_date > "2017-05-31"
+select * from issue where created_date_zoned > '2017-05-31'
+select issue_id from issue where created_date > '2017-05-31'
+select * from issue where created_date = "2017-05-31"
+select issue_id from issue where created_date > '2017-05-31'
+select issue_id from issue where resolved_date between '2017-10-01' and '2017-10-31' _EX _EM
+select issue_id from issue where resolved_date between '2017-10-01' and '2017-10-31' _EX _EM
+select issue_id from issue where resolved_date between '2017-10-01' and '2017-10-31' _EX _EM
+select issue_id from issue where resolved_date between '2017-10-01' and '2017-10-31' _EX _EM
+select issue_id from issue where resolved_date between '2017-10-01' and '2017-10-31' _EX _EM
+select issue_id from issue where resolved_date between '2017-10-01' and '2017-10-31' _EX _EM
+select issue_id from issue where resolved_date between '2017-10-01' and '2017-10-31' _EX _EM
+select issue_id from issue where created_date between '2017-01-01' and '2017-03-31' _EX _EM
+select issue_id from issue where created_date between '2017-01-01' and '2017-03-31' _EX _EM
+select issue_id from issue where created_date_zoned between '2017-01-01' and '2017-03-31'
+select issue_id from issue where created_date_zoned between '2017-01-01' and '2017-03-31'
+select issue_id from issue where created_date between '2017-01-01' and '2017-03-31' _EX _EM
+select issue_id from issue where created_date between '2017-01-01' and '2017-03-31' _EX _EM
+select issue_id from issue where created_date between '2017-01-01' and '2017-03-31' _EX _EM
+select issue_id, type, priority from issue where status = 'Open' group by issue_id order by type, priority
+select issue_id, type, priority from issue where status = 'Open' group by issue_id order by type, priority
+select issue_id, type, priority from issue where created_date between '2013-11-16' and '2013-11-28' order by type, priority
+select issue_id, type, priority from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue as t3 on t2.issue_id = t3.issue_id
+select issue_id, type, priority from issue where status = "Open" and created_date between '2013-11-16' and '2013-11-28' order by type, priority _EX _EM
+select issue_id, type, priority from issue where status = 'Open' and created_date_zoned between '2013-11-16' and '2013-11-28' order by type, priority
+select issue_id, type, priority from issue where status = 'Open' and created_date between '2013-11-16' and '2013-11-28' order by type, priority _EX _EM
+select issue_id, status from issue where type = 'Bug' _EX _EM
+select issue_id, status from issue
+select issue_id, status from issue group by issue_id
+select t1.issue_id, t2.status from issue_changelog as t1 join issue as t2 on t1.issue_id = t2.issue_id where t1.created_date = "2003-04-19 15:06:20" and t1.created_date = "2016-03-15 00:33:18"
+select issue_id, status from issue where type = "Georgia" _EM
+select issue_id, status from issue where type = "bug" _EM
+select issue_id, status from issue where type = "Georgia" _EM
+select issue_id, resolution from issue where type = 'Bug' _EX _EM
+select issue_id, resolution from issue order by issue_id, resolution
+select issue_id, resolution from issue
+select t1.issue_id, t2.resolution from issue as t1 join
+select issue_id, resolution from issue where type = "bug" _EM
+select issue_id, resolution from issue where type = "Georgia" _EM
+select issue_id, resolution from issue where type = "Georgia" _EM
+select type from issue where issue_id = 'PIG-3599' _EX _EM
+select type from issue where type = "PIG-3599"
+select type from issue where type = "PIG-3599"
+select type from issue where type = "PIG-3599"
+select type from issue where issue_id = "PIG-3599" _EX _EM
+select type from issue where issue_id = 'PIG-3599' _EX _EM
+select type from issue where issue_id = 'PIG-3599' _EX _EM
+select resolved_date from issue where issue_id = 'PIG-3599' _EX _EM
+select resolved_date from issue where issue_id = 'PIG-3599' _EX _EM
+select resolved_date from issue where issue_id = 3599 _EM
+select resolved_date from issue where issue_id = 'PIG-3599' _EX _EM
+select resolved_date from issue where resolution = 'PIG-3599'
+select t1.created_date from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.issue_id = 'PIG-3599'
+select resolved_date from issue where issue_id = 'PIG-3599' _EX _EM
+select * from issue _EX _EM
+select * from issue _EX _EM
+select * from issue as t1 join issue_component as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id group by t1.issue_id
+select * from issue where issue_id not in (select issue_id from issue_fix_version)
+select content from issue_attachment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id
+select * from issue _EX _EM
+select * from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id
+select distinct priority from issue _EX _EM
+select distinct priority from issue _EX _EM
+select distinct priority from issue _EX _EM
+select priority from issue group by priority order by count(*) asc limit 1
+select distinct priority from issue _EX _EM
+select distinct priority from issue _EX _EM
+select distinct priority from issue _EX _EM
+select distinct status from issue _EX _EM
+select distinct status from issue _EX _EM
+select distinct status from issue _EX _EM
+select status from issue group by status having count(*) >= 1
+select distinct status from issue _EX _EM
+select distinct status from issue _EX _EM
+select distinct status from issue _EX _EM
+select distinct resolution from issue _EX _EM
+select distinct resolution from issue _EX _EM
+select resolution from issue _EM
+select type from issue group by type having count(*) >= 2
+select distinct(distinct
+select distinct resolution from
+select distinct resolution from issue _EX _EM
+select commit_hash from change_set _EX _EM
+select distinct t1.git_repository_id from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id
+select t1.git_repository_id from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id
+select * from
+select distinct commit_hash from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id _EX
+select distinct commit_hash from code_change
+select distinct commit_hash from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id _EX
+select distinct t1.author_email from issue_comment as t2 join issue_fix_version as t3 on t1.issue_id = t3.issue_id
+select distinct message from change_set as t1 join issue_comment as t2 on t1.
+select t1.name from
+select t1.name from issue_comment as t2 join change_set as t3 join issue_comment as t4 on t1.issue_id = t3.issue_id
+select distinct t2.name from change_set as t1 join issue_comment AS as
+select author_email from change_set _EM
+select distinct author_email from change_set _EX _EM
+select distinct component from issue_component _EX _EM
+select component from issue_component _EM
+select component from issue_component where component in (select t1.component from issue_component as t1 join code_
+select component from issue_component where component in (select t1.component from issue_component as t1 join code_
+select distinct component from issue_component _EX _EM
+select distinct component from issue_component _EX _EM
+select distinct component from issue_component _EX _EM
+select count(*), t1.fix_version from issue_fix_version as t1 join issue_fix_version as t2 on t1.fix_version = t2.issue_id group by t1.fix_version
+select fix_version, count(*) from issue_fix_version group by fix_version
+select fix_version, count(*) from issue_fix_version group by fix_version
+select fix_version, count(*) from issue_fix_version group by fix_version
+select count(*), t1.fix_version from issue_fix_version as t1 join issue_fix_version as t2 on t1.fix_version = t2.fix_version group by t1.fix_version
+select count(*), t1.fix_version from issue_fix_version as t1 join issue_fix_version as t2 on t1.fix_version = t2.fix_version group by t1.fix_version
+select count(*), t1.fix_version from issue_fix_version as t1 join issue_fix_version as t2 on t1.fix_version = t2.fix_version group by t1.fix_version
+select fix_version from issue_fix_version group by fix_version order by count(*) desc limit 1 _EX _EM
+select fix_version from issue_fix_version group by fix_version order by count(*) desc limit 1 _EX _EM
+select fix_version from issue_fix_version group by fix_version order by count(*) desc limit 1 _EX _EM
+select fix_version from issue_fix_version group by fix_version order by count(*) desc limit 1 _EX _EM
+select fix_version from issue_fix_version group by fix_version order by count(*) desc limit 1 _EX _EM
+select fix_version from issue_fix_version group by fix_version order by count(*) desc limit 1 _EX _EM
+select fix_version from issue_fix_version group by fix_version order by count(*) desc limit 1 _EX _EM
+select status from issue order by created_date_zoned desc limit 1 _EX
+select status from issue order by created_date limit 1
+select status from issue order by created_date limit 1
+select status from issue order by created_date desc limit 1 _EX _EM
+select status from issue group by status order by created_date_zoned desc limit 1
+select status from issue order by created_date_zoned desc limit 1 _EX
+select status from issue order by created_date_zoned desc limit 1 _EX
+select fix_version from issue_fix_version where fix_version = "PIG-3599"
+select t1.fix_version from issue_fix_version as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.resolution = "PIG-3599"
+select fix_version from issue_fix_version where issue_id = "PIG-3599" _EX _EM
+select fix_version from issue_fix_version AS where
+select fix_version from issue_fix_version where issue_id = (select issue_id from issue_fix_version where fix_version = 'PIG-3599')
+select fix_version from issue_fix_version where issue_id = "PIG-3599" _EX _EM
+select fix_version from issue_fix_version where issue_id = "PIG-3599" _EX _EM
+select count(*), created_date from issue group by created_date _EX _EM
+select count(*), created_date from issue group by created_date _EX _EM
+select count(*) from issue
+select issue_id, count(*) from issue group by issue_id
+select created_date, count(*) from issue group by created_date _EX _EM
+select created_date, count(*) from issue group by created_date _EX _EM
+select created_date, count(*) from issue group by created_date _EX _EM
+select count(*), t1.updated_date from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.updated_date_zoned
+select count(*), created_date_zoned from issue group by created_date_zoned
+select count(*) from issue group by count(*)
+select created_date, created_date_zoned from issue group by created_date_zoned
+select updated_date, count(*) from issue group by updated_date _EX _EM
+select updated_date, count(*) from issue group by updated_date _EX _EM
+select updated_date, count(*) from issue group by updated_date _EX _EM
+select count(*), resolved_date from issue group by resolved_date _EX _EM
+select count(*), resolved_date from issue group by resolved_date _EX _EM
+select count(*), min(resolved_date_zoned) from issue group by min(resolved_date_zoned)
+select resolved_date from issue order by resolved_date desc limit 1
+select resolved_date, count(*) from issue group by resolved_date _EX _EM
+select resolved_date, count(*) from issue group by resolved_date _EX _EM
+select resolved_date, count(*) from issue group by resolved_date _EX _EM
+select count(*), created_date_zoned from
+select count(*), t1.name from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id group by t1.name
+select count(*), commit_hash from change_set group by commit_hash
+select count(*), git_repository_id from change_set group by git_repository_id
+select committed_date, count(*) from change_set group by committed_date _EX _EM
+select count(*), committed_date from change_set group by committed_date _EX _EM
+select committed_date, count(*) from change_set group by committed_date _EX _EM
+select resolved_date, issue_id from issue where resolution = "Daniel Ward" order by resolved_date desc
+select issue_id from issue where resolution = "Daniel Ward" order by resolved_date_zoned desc
+select t2.resolution, t1.issue_id from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t1.assignee = "Daniel Ward" order by t2.resolution desc
+select resolved_date, issue_id from issue where assignee = "Daniel Ward" order by resolved_date
+select resolved_date, issue_id from issue where assignee = "Daniel Ward" order by resolved_date desc
+select resolved_date, issue_id from issue where assignee = "Daniel Ward" order by resolved_date desc
+select resolved_date, issue_id from issue where assignee = "Daniel Ward" order by resolved_date desc
+select count(*), t1.assignee_username from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t1.resolved_date like "2014-10-01%" group by t1.assignee_username
+select count(*) from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t1.resolution = "2014-10-01" and t2.resolution = "2014-10-31"
+select count(*) from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t1.resolution = "John Stark" and t2.resolution = "October 2014"
+select count(*) from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t1.author_e
+select count(*) from issue where resolved_date between "2014-10-01" and "2014-10-31"
+select count(*) from issue where resolved_date between resolved_date and resolved_date
+select t1.issue_id from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.resolved_date between '2014-10-01' and '2014-10-31'
+select count(*) from issue where created_date between '2015-01-01' and '2015-04-30' _EM
+select count(*) from issue where created_date between '2015-01-19 15:06:20' and '2015-04-19 00:33:18' _EM
+select count(*) from issue where created_date = "2015-03-19 15:06:20"
+select count(*) from issue where created_date = "2015-04-19 15:06:20" and updated_date = "2015-03-15 00:33:18"
+select count(*) from issue where created_date between '2015-01-01' and '2015-04-30' _EM
+select count(*) from issue where created_date between '2015-01-01' and '2015-04-30' _EM
+select count(*) from issue where created_date between '2015-01-01' and '2015-04-30' _EM
+select created_date from issue group by created_date order by count(*) desc limit 1 _EX
+select created_date from issue group by created_date order by count(*) desc limit 1 _EX
+select created_date from issue group by created_date_zoned order by count(*) desc limit 1
+select created_date from issue group by created_date order by count(*) desc limit 1 _EX
+select issue_id, created_date from issue group by created_date order by count(*) desc limit 1
+select created_date, count(*) from issue group by created_date order by count(*) desc limit 1
+select created_date, count(*) from issue group by created_date order by count(*) desc
+select resolved_date from issue group by resolved_date order by count(*) desc limit 1 _EX
+select resolved_date from issue group by resolved_date order by count(*) desc limit 1 _EX
+select resolved_date from issue group by resolved_date order by count(*) desc limit 1 _EX
+select resolved_date from issue group by resolved_date order by count(*) desc limit 1 _EX
+select issue_id, count(*) from issue group by resolved_date order by count(*) desc limit 1
+select resolved_date, count(*) from issue group by resolved_date order by count(*) desc limit 1
+select resolved_date from issue group by resolved_date order by count(*) desc
+select count(*) from issue _EX _EM
+select count(*) from git_repository
+select count(*) from issue _EX _EM
+select count(*) from issue _EX _EM
+select count(*) from issue_comment as t1 join issue_component as t2 on t1.issue_id = t2.issue_id group by t1.issue_id
+select count(*) from issue where issue_id in (select issue_id from issue_comment group by issue_id order by count(*) desc limit 1)
+select count(*) from issue _EX _EM
+select count(distinct type), t1.type from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id group by t1.type
+select count(distinct type) from issue _EX _EM
+select count(distinct type) from issue _EX _EM
+select count(distinct type) from issue _EX _EM
+select count(distinct type) from issue _EX _EM
+select count(distinct type) from issue _EX _EM
+select count(distinct type) from issue _EX _EM
+select type, count(*) from issue group by type _EX _EM
+select type, count(*) from issue group by type _EX _EM
+select type, count(*) from issue group by type _EX _EM
+select type, count(*) from issue group by type _EX _EM
+select type, count(*) from issue group by type _EX _EM
+select type, count(*) from issue group by type _EX _EM
+select type, count(*) from issue group by type _EX _EM
+select count(distinct priority) from issue _EX _EM
+select count(distinct priority) from issue _EX _EM
+select count(distinct priority) from issue _EX _EM
+select count(distinct priority) from issue _EX _EM
+select count(distinct priority) from issue _EX _EM
+select count(distinct priority) from issue _EX _EM
+select count(distinct priority) from issue _EX _EM
+select priority, count(*) from issue group by priority _EX _EM
+select priority, count(*) from issue group by priority _EX _EM
+select priority, count(*) from issue group by priority _EX _EM
+select count(*), priority from issue group by priority _EX _EM
+select count(*), t1.priority from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id group by t1.priority _EX
+select t2.priority, count(*) from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id group by t2.priority _EX
+select priority, count(*) from issue group by priority _EX _EM
+select count(distinct status) from issue _EX _EM
+select count(*), t1.status from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id group by t1.status
+select count(distinct status) from issue _EX _EM
+select count(distinct status) from issue _EX _EM
+select count(distinct status) from issue _EX _EM
+select count(distinct status), t1.name from git_repository as t1 join issue as t2 on t2.issue_id = t1.git_repository_id group by t1.name
+select count(distinct status) from issue _EX _EM
+select count(distinct resolution) from issue _EX _EM
+select count(*), resolution from issue group by resolution
+select count(*), t1.type from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id group by t1.type
+select distinct resolution from issue as t1 join code_change as t2 on t1.issue_id = t2.issue_id
+select count(*), t1.resolution from issue as t1 join git_repository as t2 on t1.resolved_date_zoned = t2.git_repository_id group by t1.resolution
+select count(distinct resolution) from issue _EX _EM
+select count(distinct resolution) from issue _EX _EM
+select count(distinct assignee) from issue _EX _EM
+select count(distinct assignee_username) from issue
+select count(distinct assignee_username) from issue
+select count(distinct t1.name), t1.group_id from issue as t2 join issue_comment as t3 on t1.issue_id = t3.issue_
+select count(distinct assignee) from issue _EX _EM
+select count(distinct assignee) from issue _EX _EM
+select count(distinct assignee) from
+select assignee, count(*) from issue group by assignee _EX _EM
+select count(*), assignee from issue group by assignee _EX _EM
+select count(*), assignee from issue group by assignee _EX _EM
+select count(*), t1.assignee_username from
+select assignee, count(distinct
+select count(distinct assignee), count(distinct t1.assignee) from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.assignee
+select assignee, count(*) from issue group by assignee _EX _EM
+select count(distinct assignee_username) from issue _EX _EM
+select count(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t2.issue_id in (select t1.issue_id from issue_comment as t3 join issue_component as t4 on t3.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_component as t5 join
+select count(*), t1.assignee_username from
+select count(*) from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id group by t3.issue_id
+select count(distinct assignee_username) from issue _EX _EM
+select count(distinct assignee_username) from issue _EX _EM
+select count(distinct assignee_username), t1.name from git_repository as t1 join issue as t2 on t2.issue_id = t1.git_repository_id group by t1.name
+select assignee_username, count(*), t1.assignee_username from
+apache
+select assignee_username from issue group by assignee_username order by count(*) asc
+select count(*), assignee_username from issue group by assignee_username _EX _EM
+select assignee_username, count(*), t1.assignee_username from
+select assignee_username, count(*) from issue group by assignee_username _EX _EM
+select assignee_username, count(*), t1.assignee_username from
+select count(distinct reporter_username) from issue
+select count(distinct created_date) from issue
+select count(distinct reporter_username) from issue
+select count(*), t1.name, t1.reporter_username from
+select count(distinct reporter_username) from issue
+select count(distinct reporter_username) from
+select count(distinct reporter_username) from issue
+select count(*), t2.name from issue_comment as t1 join
+select username, count(*), min(t2.username) from issue_comment as t1 join
+select count(*), t2.name from issue_comment as t1 join
+select count(*), t1.username from issue_comment as t1 join
+select t2.name, count(*) from issue_comment as t1 join
+select count(*), t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.username
+select count(*), t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.username
+select reporter, count(*) from issue group by reporter _EX _EM
+select reporter_username from issue group by reporter_username having count(*) >= 1
+select count(*) from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id join issue_component as t4 on t3.issue_id = t4.issue_id group by t3.issue_id
+select count(*), t1.reporter_username from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.reporter_username
+select t2.reporter_username, count(*) from git_repository as t1 join
+select reporter_username, count(*) from issue group by reporter_username
+select reporter, count(*), t2.name from jira_repository as t1 join
+select count(distinct reporter_username) from issue _EX _EM
+select count(distinct reporter_username) from issue _EX _EM
+select count(distinct t1.username) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t2.created_date = "2010-04-19 15:06:20"
+select count(distinct reporter_username) from issue _EX _EM
+select count(distinct reporter_username), count(distinct t1.name) from git_repository as t1 join issue as t2 on t1.git_repository_id = t2.git
+select count(*) from jira_repository
+select count(distinct reporter_username) from issue _EX _EM
+select reporter_username, count(*) from
+select count(distinct reporter_username), count(distinct
+select count(*) from jira_repository
+select count(*), t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.username
+select reporter_username, count(*) from issue group by reporter_username _EX _EM
+select t1.reporter_username, count(*) from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.reporter_username
+select reporter_username, count(*), t1.name from issue as t2 join issue_changelog as t3 on t1.issue_id = t3.issue_id join
+select count(*), t1.name from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id
+select count(*), t1.name from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id group by t1.name
+select count(*) from change_set _EX _EM
+select count(*) from change_set _EX _EM
+select count(*), t1.name from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id group by t1.name
+select count(*), t1.name from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id group by t1.name
+select count(*), t1.name from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id group by t1.name
+select count(distinct author) from issue_
+select count(distinct author) from change_set _EX _EM
+select count(*), commit_hash from change_set group by commit_hash having count(*) >= 2
+select count(*) from jira_repository
+select count(distinct author_email) from change_set
+select count(distinct author_email) from change_set
+select count(distinct author) from change_set _EX _EM
+select t2.display_name, count(*) from issue_comment as t1 join
+select count(*), t2.name from issue_comment as t1 join
+select count(*), t1.name from jira_
+select count(*), t1.name from git_repository as t1 join issue_comment as t2 on t1.git_repository_id = t2.git_repository_id
+select t2.description, count(*) from issue_comment as t1 join issue as t2 on t1.issue_id = t2.issue_id group by t2.description
+select t2.display_name, count(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t2.display_name
+select t2.description, count(*) from issue_comment as t1 join issue as t2 on t1.issue_id = t2.issue_id group by t2.description order by count(*) desc
+select distinct username from issue_comment _EX _EM
+select distinct username from issue_comment _EX _EM
+select distinct t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t2.issue_id in (select t2.issue_id from issue_comment as t3 join issue_comment as t4 on t3.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_comment as t5 join issue_comment as t6 on t5.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_comment as t5 join issue_comment as t6 on t5.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_comment as t5 join issue_comment as t8 on t5.issue_id = t4.issue_id) 
+select distinct t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t2.issue_id in (select t2.issue_id from issue_comment as t3 join issue_comment as t4 on t3.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_comment as t5 join issue_comment as t8 on t5.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_comment as t5 join issue_comment as t8 on t5.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_comment as t5 join issue_comment as t8 on t5.issue_id = t4.issue_id where t4.issue_id in
+select distinct username from issue_comment _EX _EM
+select distinct username from issue_comment _EX _EM
+select distinct t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id _EX
+select count(distinct component) from issue_component _EX _EM
+select count(*) from issue_component where component = "Application"
+select count(*) from issue_component
+select count(*) from issue_component where component = "Application"
+select count(distinct component) from issue_component _EX _EM
+select count(*) from issue_component
+select count(distinct component) from issue_component _EX _EM
+select component, count(*) from issue_component group by component _EX
+select component, count(*) from issue_component group by component _EX
+select t1.component, count(*) from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id group by t1.component
+select count(distinct component) from issue_component
+select component, count(*) from issue_component group by component _EX
+select count(*), t1.component from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id group by t1.component
+select count(*), t1.component from issue_component as t1 join issue_component as t2 on t1.issue_id = t2.issue_id group by t1.component
+select count(distinct name) from issue_link _EX _EM
+select count(distinct type) from issue_
+select count(distinct t1.name) from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id group by t1.name
+select count(distinct issue_id), t1.name from issue_link as t1 join issue_component as t2 on t1.source_issue_id = t2.issue_id group by t1.name
+select count(distinct name), t1.name from issue_link as t1 join issue_fix_version as t2 on t1.source_issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id group by t1.name
+select count(distinct t1.name) from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id group by t1.name
+select count(distinct name) from issue_link _EX _EM
+select t1.name, t2.name from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id
+select count(*) from issue_link
+select count(*), t1.name from issue_link as t1 join issue as t2 on t1.source_issue_id = t2.issue_id group by t1.name _EX
+select count(*), t1.name from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id group by t1.name order by count(*) asc
+select name, count(*) from issue_link group by name _EX _EM
+select t1.name, count(*) from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id group by t1.name
+select t1.name, count(*) from issue_link as t1 join
+select count(*) from issue where type = "Bug" _EX _EM
+select count(*) from
+select count(*) from issue
+select count(*), t1.name from git_repository as t1 join issue_fix_version as t2 on t1.git_repository_id = t2.git_repository_id
+select count(*) from issue where type = "%bug%" _EM
+select count(*) from issue where type = "bug" _EM
+select count(*) from issue where type = "Georgia" _EM
+select distinct assignee from issue _EX _EM
+select distinct assignee_username from
+select distinct t1.assignee_username from issue as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.issue_id in (select t2.issue_id from issue as t3 join issue_comment as t4 on t3.issue_id = t4.issue_id where t3.issue_id in (select t4.issue_id from issue_comment as t5 join issue as t6 on t5.issue_id = t4.issue_id where t3.issue_id in (select t4.issue_id from issue_comment as t5 join issue as t6 on t5.issue_id = t4.issue_id where t3.issue_id in (select t4.issue_id from issue_comment as t5 join issue as t6 on t5.issue_id = t4.issue_id where t3.issue_
+select count(distinct assignee_username), t2.name from jira_repository as t1 join
+select distinct assignee from issue _EX _EM
+select distinct assignee from
+select count(distinct assignee) from
+select distinct assignee_username from issue _EX _EM
+select distinct t1.assignee_username from issue as t1 join issue_attachment as t2 on t1.issue_id = t2.issue_id join issue_comment as t3 on t2.issue_id = t3.issue_id
+select distinct assignee_username from
+select distinct t1.assignee_username from issue as t1 join issue_attachment as t2 on t1.issue_id = t2.issue_id join issue_comment as t3 on t2.issue_id = t3.issue_id
+select distinct assignee_username from
+select distinct assignee_username from
+select distinct assignee_username from issue _EX _EM
+select distinct reporter_username from issue
+select distinct t1.reporter_username from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id
+select distinct t1.reporter_username from issue as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id
+select distinct reporter_username from issue
+select distinct reporter_username from issue
+select distinct reporter_username from
+select distinct reporter_username from
+select distinct reporter_username from issue _EX _EM
+select distinct t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join issue_comment as t3 on t2.issue_id = t3.issue_id
+select distinct reporter_username from
+select distinct t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join issue_comment as t3 on t2.issue_id = t3.issue_id
+select distinct reporter_username from issue _EX _EM
+select distinct reporter_username from
+select distinct reporter_username from issue _EX _EM
+select distinct author_email from change_set
+select distinct t1.author_email from
+select distinct
+select distinct t1.name from git_repository as t1 join change_set as t2 on t1.git_repository_id = t2.git_repository_id
+select count(distinct author_email) from change_set
+select distinct author from change_set _EX _EM
+select distinct author_email from change_set
+select t2.display_name, count(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.issue_id = 'PIG-3592' group by t1.issue_id
+select count(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t2.issue_id = "PIG-3592"
+select count(*), t1.name from issue_comment AS as
+select count(*), min(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t2.issue_id = 'PIG-3592' group by min(*)
+select t2.display_name, count(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.issue_id = 'PIG-3592' group by t1.issue_id
+select count(*), display_name from issue_comment where issue_id = 'PIG-3592' group by display_name
+select t2.description, count(*) from issue_comment as t1 join issue as t2 on t1.issue_id = t2.issue_id where t1.issue_id = 'PIG-3592' group by t2.description
+select issue_id, created_date, resolved_date from issue order by created_date, resolved_date asc limit 1
+select issue_id, created_date, resolved_date from issue
+select t1.issue_id, t1.created_date, t1.resolved_date, t2.commit_hash from issue as t1 join change_set as t2 on t1.resolved_date_zoned = t2.commit_hash group by t1.issue_id
+select issue_id, created_date, resolved_date from issue group by issue_id
+select t1.issue_id, t1.created_date, t1.resolved_date from issue as t1 join change_set as t2 on t1.issue_id = t2.issue_
+select t1.issue_id, t1.created_date, t1.resolved_date from issue as t1 join change_set as t2 on t1.issue_id = 2
+select t1.issue_id, t1.created_date, t1.resolved_date from issue as t1 join change_set as t2 on t1.issue_id = t2.issue_
+select distinct issue_id from issue_link as t1 join change_set as t2 on t1.change_
+select distinct t1.name from issue_link as t1 join issue_link AS as
+select issue_id, count(*), t1.name from issue_link as t1 join issue_link as t2 on t1.issue_
+select distinct issue_id, name from issue_link as t1 join issue_link as t2 on t1.issue_
+select distinct t1.name from issue_link as t1 join issue_link as t2 on t1.issue_i
+select distinct name from issue_link as t1 join
+select * from issue_link
+select count(*) from issue where issue_id not in ( select issue_id from issue_link 
+select count(*) from issue where issue_id not in ( select issue_id from issue_comment )
+select count(*) from issue where issue_id not in ( select issue_id from issue_link
+select count(*) from issue_comment where commit_hash not in (select commit_hash from issue_link
+select count(*) from issue where issue_id not in (select issue_id from issue_
+select count(*) from issue where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version where issue_id not in ( select issue_id from issue_fix_version
+select count(*) from issue where issue_id not in (select issue_id from issue_
+select count(*) from issue group by issue_id having count(*) > 1
+select count(*) from issue group by issue_id having count(*) > 1
+select count(*) from issue_comment group by issue_id having count(*) >= 2
+select count(*) from issue group by issue_id having count(*) > 1
+select count(*) from issue_link group by count(*) having count(*) >= 2
+select count(*) from issue_link group by count(*) having count(*) > 1
+select count(*) from issue_link group by count(*) having count(*) > 1
+select count(*) from issue_link group by count(*) having count(*) = 1
+select count(*) from issue group by count(*) having count(*) = 1
+select count(*) from issue_comment as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id group by t1.issue_id having count(*) = 1
+select count(*) from issue_link as t1 join code_change as t2 on t1.
+select count(*) from issue_link group by count(*)
+select count(*) from issue_link group by count(*) having count(*) = 1
+select count(*) from issue_link group by count(*)
+select username, count(distinct issue_id) from issue_comment group by username _EX _EM
+select count(*), t1.name, t1.resolution from issue_comment as t2 join issue_comment as t3 on t1.issue_id = t3.issue_id
+select count(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id where t1.username = "%left%" group by t1.username
+select t2.username, count(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t2.username
+select t2.username, count(distinct t1.issue_id) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t2.username _EX
+select username, count(distinct issue_id) from issue_comment group by username _EX _EM
+select count(*), t1.username from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id
+select t1.issue_id, count(distinct t1.username) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.issue_id _EX
+select count(*) from issue_comment
+select count(*), issue_id from issue_comment group by issue_id
+select count(distinct username) from issue_comment
+select issue_id, count(distinct username) from issue_comment group by issue_id _EX _EM
+select count(distinct username), issue_id from issue_comment group by issue_id _EX _EM
+select t1.issue_id, count(distinct t2.username) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.issue_id _EX
+select issue_id, count(*) from issue_comment group by issue_id
+select t1.issue_id, count(*) from issue_comment as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id group by t1.issue_id
+select issue_id, count(*) from issue_comment group by issue_id
+select issue_id, count(*) from issue_comment group by issue_id
+select issue_id, count(*) from issue_comment group by issue_id
+select issue_id, count(*) from issue_comment group by issue_id
+select issue_id, count(*) from issue_comment group by issue_id
+select issue_id, summary, description from issue _EX _EM
+select issue_id, summary, description from issue _EX _EM
+select issue_id, summary, description from issue _EX _EM
+select issue_id, sum(summary), description from issue
+select issue_id, summary, description from issue _EX _EM
+select issue_id, summary, description from issue _EX _EM
+select issue_id, summary, description from issue _EX _EM
+select commit_hash from change_set where created_date >= "2016-01-19 15:06:20" and resolved_date <= "2018-03-15 00:
+select commit_hash from change_set where created_date = "PIG-3592" and resolved_date = "1999-03-052
+select commit_hash from change_set where created_date = 'PIG-3592' and resolved_date = '2016-03-15 00"
+select commit_hash from issue_comment join issue_fix_version as t1 join issue_comment as t2 on t1.issue_id = t2.issue_id join issue_comment as t3 on t2.issue_id = t3.issue_id join issue_fix_version as t4 on t3.issue_id = t4.issue_id join issue_fix_version as t5 on t4.issue_id = t5.issue_id
+select t1.commit_hash from code_change as t1 join issue as t2 on
+select commit_hash from change_set where created_date >= created_date and created_date <= 'PIG-3592'
+select t1.commit_hash, t2.created_date, t2.resolved_date from change_set as t1 join issue as t2 on t1.issue_
+select count(*), t1.type from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t1.type = "bug" intersect select count(*) from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t1.type = "improvement"
+select count(*), t1.resolution from issue as t1 join code_change as t2 on t1.issue_id = t2.issue_id
+select count(*), t1.name from
+select issue_id, count(*) from issue group by issue_id
+select count(*), t1.type from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t1.type = "Git" union select count(*), t1.type from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t1.type = "Initialization"
+select type, count(*) from issue group by type
+select type, count(*) from issue group by type
+select count(*) from issue_link as t1 join issue_link as t2 on t1.issue_
+select count(*) from issue_fix_version where fix_version = "PIG-3599"
+select count(*) from code_change where file_path like "%pIG-3599%"
+select count(*) from issue_link where issue_id not in ( select issue_id from issue_link as t1 join
+select count(*) from issue_attachment as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.issue_id = 'PIG-3599'
+select count(*) from issue_link as t1 join issue_link as t2 on t1.issue_
+select count(*) from issue_link as t1 join issue_link as t2 on t1.issue_
+select min(file_path) from issue_attachment as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id
+select * from issue_fix_version as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t2.issue_id in (select t1.issue_id from issue_fix_version as t3 join issue_fix_version as t4 on t3.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_fix_version as t5 join issue_fix_version as t8 on t5.issue_id = t4.issue_id where t4.issue_id in (select t4.issue_id from issue_fix_version as t5 join issue_fix_version as t8 on t5.fix_version = t8
+select count(*) from issue_link as t1 join issue as t2 on t1.source_issue_id = t2.issue_id group by t1.source_issue_id
+select count(*) from issue_attachment as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id group by t1.issue_id
+select count(*), t1.file_path from code_change as t1 join issue_link as t2 on t1.change_
+select min(file_path) from issue_attachment as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id
+select count(*), t1.issue_id from issue_fix_version as t1 join issue as t2 on t1.issue_id = t2.issue_id where t2.type = "Git" group by t1.issue_id
+select count(*) from issue_link as t1 join issue as t2 on t1.source_issue_id = t2.source_issue_id
+select count(*) from issue_link
+select count(*) from issue_link as t1 join issue_fix_version as t2 on t1.issue_
+select count(*) from issue_link group by count(*)
+select count(*) from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id where issue_id in ( select source_issue_id from issue_link as t3 join issue_fix_version as t4 on t3.target_issue_id = t4.target_issue_id
+select count(*) from issue_link as t1 join issue as t2 on t1.source_issue_id = t2.source_issue_id
+select count(*) from issue_link where source_issue_id in ( select source_issue_id from issue_link where target_issue_id in ( select target_issue_id from issue_link AS where
+select source_issue_id, target_issue_id from issue_link where type = 'Integerment" intersect select source_issue_id, target_issue_id
+select t1.issue_id from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t1.type = "bug" intersect select t1.issue_id from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t1.type = "improvement"
+select source_issue_id from issue_link intersect select target_issue_id from issue_link
+select issue_id from issue where source_issue_id in (select source_issue_id from issue_link where is_containment = '0' group by source_issue_id
+select source_issue_id, target_issue_id from issue_link intersect select source_issue_id, target_issue_id from issue_link
+select source_issue_id from issue_link intersect select target_issue_id from issue_link
+select source_issue_id, target_issue_id from issue_link intersect select target_issue_id from issue_link
+select distinct name from issue_link _EX _EM
+select distinct type from issue
+select t1.name from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id group by t1.name having count(*) = 2
+select distinct(t1.name) from issue_link as t1 join issue_component as t2 on t1.source_issue_id = t2.issue_id join issue_component as t3 on t2.issue_id = t3.issue_id
+select distinct t1.name from issue_link as t1 join issue_link as t2 on t1.source_issue_id = t2.source_issue_id where t2.name = "apache_pig"
+select distinct name from issue_link as t1 join issue_component as t2 on t1.source_issue_id = t2.source_issue_id
+select distinct name from issue_link _EX _EM
+select t1.type, count(*) from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id group by t1.issue_id
+select t1.type, count(*) from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id group by t1.type
+select t1.type, count(*) from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.target_issue_id in (select t2.target_issue_id from issue_link as t3 join issue_link as t4 on t3.source_issue_id = t4.source_issue_id where t4.target_issue_id!= "null") group by t1.type
+select t1.type, count(*) from issue as t1 join issue_link as t2 on t1.issue_id = 2 where t2.target_issue_id!= "cloner" group by t1.type
+select t1.type, count(*) from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.name = "cloners" group by t1.type
+select source_issue_id, target_issue_id from issue_link where name = "Cloters" group by source_issue_id
+select source_issue_id, target_issue_id from issue_link where name = "Clothes" group by source_issue_id
+select t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.name = 'Closed source_issue' intersect select t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.name = 'Closed target_issue_id'
+select distinct t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.target_issue_id!= "cloner"
+select distinct t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.target_issue_id = 'cloner'
+select type from issue where issue_id in (select issue_id from issue_link
+select t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.name = "cloners"
+select t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.name = "Clothes" intersect select t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.name = "Clothes"
+select t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.name = "Clothes" intersect select t1.type from issue as t1 join issue_link as t2 on t1.issue_id = t2.source_issue_id where t2.name = "Clothes"
+select distinct type from issue _EX _EM
+select distinct type from issue _EX _EM
+select type from issue group by type having count(*) >= 2
+select distinct type from issue _EX _EM
+select distinct type from issue _EX _EM
+select distinct type from issue _EX _EM
+select distinct type from issue _EX _EM
+select type from issue where type = 'Bug'
+select * from issue where issue_id not in (select issue_id from issue_fix_version)
+select * from issue where issue_id not in (select issue_id from issue_fix_version)
+select * from
+select * from issue where type = "Georgia" _EM
+select * from issue where type = "bug" _EM
+select * from issue where type = "issue_type" _EM
+select status from issue except select status from issue where status!= "In Progress"
+select issue_id from issue except select t1.issue_id from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id
+select status from issue where created_date_zoned not in (select created_date_zoned from issue)
+select issue_id from issue except select t1.issue_id from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id
+select issue_id from issue except select t1.issue_id from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id where t1.status = "In Progress"
+select issue_id from issue except select t1.issue_id from issue as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id join issue as t3 on t2.issue_id = t3.issue_id where t3.status = "In Progress"
+select status from issue where status!= "In Progress"
+select count(*) from issue as t1 join issue_attachment as t2 on t1.issue_id = t2.issue_id where t1.type = 'Improvement'
+select max(*), min(*) from change_set as t1 join issue_fix_version as t2 on t2.issue_id = t1.issue_id
+select count(*) from issue_link as t1 join issue as t2 on t1.source_issue_id = t2.issue_id group by t1.source_issue_id order by count(*) desc limit 1
+select count(*) from issue_fix_version as t1 join issue_fix_version as t2 on t1.issue_id = t2.issue_id group by t1.issue_id order by count(*) desc limit 1
+select count(*), t1.file_path from code_change as t1 join issue_link as t2 on t1.change_type = t2.issue_id
+select count(*) from issue as t1 join issue_attachment as t2 on t1.issue_id = t2.issue_id where t1.type = 'Improvement'
+select count(*), t1.issue_id from issue_fix_version as t1 join issue_link as t2 on t1.issue_id = t2.issue_id
