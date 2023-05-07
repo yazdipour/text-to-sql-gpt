@@ -41,11 +41,14 @@ openai.api_key = env['OPENAI_API_KEY']
 model_name = env['OPENAI_MODEL_NAME']
 dataset_name = env['DATASET_NAME']
 rerun_failed = env['RERUN_FAILED'] == 'True'
+gold_json_path = env['GOLD_JSON_PATH']
 previous_eval_breakdown_path = env['PREVIOUS_EVAL_BREAKDOWN_PATH_IF_RERUN']
 base_path = f'../data/{dataset_name}'
 table_schema_path = get_relative_path(f"{base_path}/tables.json")
-pred_path = get_relative_path(f"{base_path}/predictions-{model_name}.sql")
-gold_json_path = get_relative_path(f"{base_path}/gold.json")
+gold_json_file_name = gold_json_path.split('/')[-1].split('.')[0]
+pred_path = get_relative_path(
+    f"{base_path}/predictions-{model_name}-{gold_json_file_name}.sql")
+gold_json_path = get_relative_path(f"{base_path}/{gold_json_path}")
 
 print(f"Running {model_name} on {dataset_name} dataset")
 print(f"Rerun failed: {rerun_failed}")

@@ -1,5 +1,5 @@
 from process_sql import get_schema, Schema, get_sql
-
+import glob
 import json
 import os
 
@@ -39,8 +39,13 @@ def format_sql_field(json_filename, db_dir):
 
 
 if __name__ == "__main__":
-    json_filename = "../../data/seoss/gold_pig_not_specific.json"
     db_dir = "../../data/seoss/database"
-    gold_filename = "gold_pig_not_specific.sql"
-    format_sql_field(json_filename, db_dir)
-    format_gold(json_filename, gold_filename)
+    json_filenames = f"../../data/seoss/unbalanced/*.json"
+    # relative path
+    json_filenames = os.path.join(os.path.dirname(__file__), json_filenames)
+    globs = glob.glob(json_filenames)
+    for json_filename in globs:
+        goldname = json_filename.split("/")[-1].split("\\")[-1].split(".")[0]
+        gold_filename = f"{goldname}.sql"
+        format_sql_field(json_filename, db_dir)
+        format_gold(json_filename, gold_filename)
