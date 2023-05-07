@@ -1,0 +1,466 @@
+0 easy pred: SELECT issue_id FROM issue WHERE type = 'Bug'
+0 easy gold: SELECT issue_id FROM issue WHERE type = 'Bug'
+
+eval_err_num:1
+1 hard pred: SELECT * FROM issue WHERE status IN ('Closed', 'Resolved', 'Patch Available')
+1 hard gold: SELECT * FROM issue WHERE status = "Closed" OR status = "Resolved" OR status = "Patch Available"
+
+2 medium pred: SELECT issue_id, type, description FROM issue JOIN issue_component ON issue.issue_id = issue_component.issue_id WHERE component = 'impl'
+2 medium gold: SELECT T1.issue_id, T1.type, T1.description FROM issue AS T1 JOIN issue_component AS T2 ON T1.issue_id = T2.issue_id WHERE T2.component = "impl"
+
+3 easy pred: SELECT issue_id FROM issue WHERE updated_date >= '2017-03-22' AND updated_date < '2017-03-24'
+3 easy gold: SELECT issue_id FROM issue WHERE updated_date BETWEEN '2017-03-22' AND '2017-03-23'
+
+4 easy pred: SELECT * FROM issue WHERE issue_id = 'PIG-3599'
+4 easy gold: SELECT * FROM issue WHERE issue_id = "PIG-3599"
+
+5 medium pred: SELECT * FROM issue WHERE assignee = 'Daniel Ward' AND status = 'Open'
+5 medium gold: SELECT * FROM issue WHERE assignee = "Daniel Ward" AND status = 'Open'
+
+6 easy pred: SELECT * FROM issue WHERE status = 'In Progress'
+6 easy gold: SELECT * FROM issue WHERE status = 'In Progress'
+
+7 medium pred: SELECT issue_id  FROM issue  WHERE reporter = 'John Stark' AND type = 'bug'
+7 medium gold: SELECT * FROM issue WHERE reporter = 'John Stark' AND type = 'Bug'
+
+8 medium pred: SELECT * FROM issue WHERE priority = 'Blocker' OR priority = 'Critical'
+8 medium gold: SELECT * FROM issue where priority = 'Blocker' OR priority = 'Critical'
+
+9 easy pred: SELECT * FROM issue WHERE updated_date > '2017-03-28'
+9 easy gold: SELECT * FROM issue WHERE updated_date > '2017-03-28'
+
+10 easy pred: SELECT issue_id, summary, assignee FROM issue WHERE assignee = 'Daniel Ward'
+10 easy gold: SELECT * FROM issue WHERE assignee = '﻿Daniel Ward'
+
+11 hard pred: SELECT * FROM issue WHERE issue_id IN (     SELECT DISTINCT issue_id     FROM issue_attachment )
+11 hard gold: SELECT * FROM issue AS T1 WHERE T1.issue_id IN (SELECT T2.issue_id FROM issue_attachment AS T2)
+
+12 medium pred: SELECT issue_id, summary FROM issue WHERE type = 'bug'
+12 medium gold: SELECT issue_id, summary FROM issue WHERE type = 'Bug'
+
+13 medium pred: SELECT issue_id, description FROM issue WHERE type = 'Bug'
+13 medium gold: SELECT issue_id, description FROM issue WHERE type = 'Bug'
+
+14 hard pred: SELECT * FROM issue WHERE issue_id IN (     SELECT issue_id     FROM issue_component     WHERE component = 'grunt'     INTERSECT     SELECT issue_id     FROM issue_component     WHERE component = 'parser' )
+14 hard gold: SELECT * FROM issue AS T1 JOIN issue_component AS T2 ON T1.issue_id = T2.issue_id JOIN issue_component AS T3 ON T1.issue_id = T3.issue_id WHERE T2.component = 'grunt' AND T3.component = 'parser' AND T2.issue_id = T3.issue_id
+
+15 easy pred: SELECT status FROM issue WHERE issue_id = 'PIG-3599'
+15 easy gold: SELECT status FROM issue WHERE issue_id = "PIG-3599"
+
+16 medium pred: SELECT issue_id, priority FROM issue WHERE type = 'bug'
+16 medium gold: SELECT issue_id, priority FROM issue WHERE type = 'Bug'
+
+17 medium pred: SELECT issue_id, status, resolution, summary, description FROM issue WHERE type = 'bug' AND priority = 'major'
+17 medium gold: SELECT issue_id, status, resolution, summary, description FROM issue WHERE type = "Bug" AND priority = "Major"
+
+18 medium pred: SELECT issue_id, type, priority FROM issue WHERE status = 'open' ORDER BY type, priority
+18 medium gold: SELECT issue_id, type, priority FROM issue WHERE status = 'Open' ORDER BY type, priority
+
+eval_err_num:2
+19 medium pred: SELECT field, username FROM issue_changelog WHERE fix_version = '0.12.1' AND username IS NOT NULL
+19 medium gold: SELECT T1.field, T1.username FROM issue_changelog AS T1 JOIN issue_fix_version AS T2 ON T1.issue_id = T2.issue_id WHERE T2.fix_version = "0.12.1"
+
+20 medium pred: SELECT issue_id, type, summary, description FROM issue WHERE status = 'Open' AND priority = 'Major'
+20 medium gold: SELECT issue_id, type, summary, description FROM issue WHERE status = 'Open' AND priority = 'Major'
+
+21 easy pred: SELECT DISTINCT assignee FROM issue WHERE type = 'Bug'
+21 easy gold: SELECT DISTINCT assignee FROM issue WHERE type = 'Bug'
+
+eval_err_num:3
+22 medium pred: SELECT author, COUNT(*) AS commit_count FROM change_set GROUP BY author ORDER BY commit_count DESC
+22 medium gold: SELECT author, Count(*) FROM change_set GROUP BY author
+
+23 medium pred: SELECT commit_hash, message FROM change_set
+23 medium gold: SELECT commit_hash, message FROM change_set
+
+24 easy pred: SELECT assignee FROM issue WHERE issue_id = 'PIG-3599'
+24 easy gold: SELECT assignee FROM issue WHERE issue_id = "PIG-3599"
+
+25 easy pred: SELECT COUNT(*)  FROM issue  WHERE type = 'Improvement'
+25 easy gold: SELECT Count(*) FROM issue WHERE type = 'Improvement'
+
+eval_err_num:4
+26 hard pred: SELECT issue.type, COUNT(*) AS mentions FROM issue_comment JOIN issue ON issue_comment.issue_id = issue.issue_id GROUP BY issue.type ORDER BY mentions DESC LIMIT 1
+26 hard gold: SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1
+
+27 medium pred: SELECT COUNT(*)  FROM issue  WHERE priority = 'Blocker' OR priority = 'Critical'
+27 medium gold: SELECT Count(*) FROM issue where priority = 'Blocker' OR priority = 'Critical'
+
+eval_err_num:5
+28 hard pred: SELECT file_path, COUNT(commit_hash) AS num_commits FROM code_change GROUP BY file_path ORDER BY num_commits DESC LIMIT 5
+28 hard gold: SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5
+
+29 easy pred: SELECT assignee FROM issue GROUP BY assignee HAVING COUNT(DISTINCT issue_id) = 1
+29 easy gold: SELECT assignee FROM issue GROUP BY assignee HAVING Count(issue_id) = 1
+
+eval_err_num:6
+30 extra pred: SELECT assignee, COUNT(issue_id) AS num_issues FROM issue WHERE status = 'Open' GROUP BY assignee ORDER BY num_issues DESC LIMIT 1
+30 extra gold: SELECT assignee, Count(issue_id) FROM issue WHERE status = "Open" GROUP BY assignee ORDER BY Count(issue_id) DESC LIMIT 1
+
+31 medium pred: SELECT assignee, COUNT(issue_id) FROM issue WHERE status = 'Open' GROUP BY assignee
+31 medium gold: SELECT assignee, Count(issue_id) FROM issue WHERE status = "Open" GROUP BY assignee
+
+32 medium pred: SELECT status, COUNT(*) FROM issue GROUP BY status
+32 medium gold: SELECT status, Count(status) FROM issue GROUP BY status
+
+eval_err_num:7
+33 medium pred: SELECT resolution, COUNT(*) AS count FROM issue  GROUP BY resolution ORDER BY count DESC
+33 medium gold: SELECT resolution, Count(*) FROM issue GROUP BY resolution
+
+34 medium pred: SELECT il.source_issue_id, il.target_issue_id FROM issue_link AS il WHERE il.name = 'Duplicate'
+34 medium gold: SELECT source_issue_id, target_issue_id FROM issue_link WHERE name = 'Duplicate'
+
+35 medium pred: SELECT source_issue_id, target_issue_id FROM issue_link WHERE name = 'Blocker'
+35 medium gold: SELECT source_issue_id, target_issue_id FROM issue_link WHERE name = 'Blocker'
+
+36 easy pred: SELECT COUNT(*)  FROM issue  WHERE status = 'Open'
+36 easy gold: SELECT Count(*) FROM issue WHERE status = 'Open'
+
+37 medium pred: SELECT * FROM issue WHERE priority = 'Blocker' OR priority = 'Critical'
+37 medium gold: SELECT * FROM issue WHERE priority = "Blocker" OR priority = "Critical"
+
+38 medium pred: SELECT assignee, COUNT(*) FROM issue WHERE resolution = 'Resolved' GROUP BY assignee
+38 medium gold: SELECT assignee, Count(*) FROM issue WHERE status = "Resolved" GROUP BY assignee
+
+39 medium pred: SELECT display_name, message FROM issue_comment WHERE issue_id = 'PIG-3599'
+39 medium gold: SELECT display_name, message FROM issue_comment WHERE issue_id = "PIG-3599" ORDER BY display_name
+
+40 medium pred: SELECT DISTINCT change_set.author_email FROM change_set JOIN change_set_link ON change_set.commit_hash = change_set_link.commit_hash WHERE change_set_link.issue_id = 'PIG-3592'
+40 medium gold: SELECT T1.author_email FROM change_set AS T1 JOIN change_set_link AS T2 ON T1.commit_hash = T2.commit_hash WHERE T2.issue_id = "PIG-3592"
+
+41 medium pred: SELECT COUNT(DISTINCT issue.assignee)  FROM issue  JOIN issue_component ON issue.issue_id = issue_component.issue_id  WHERE issue_component.component = 'impl'
+41 medium gold: SELECT Count(assignee) FROM issue AS T1 JOIN issue_component as T2 ON T1.issue_id = T2.issue_id WHERE T2.component = "impl" 
+
+eval_err_num:8
+42 medium pred: SELECT DISTINCT(issue.assignee)  FROM issue  JOIN issue_component ON issue.issue_id = issue_component.issue_id  WHERE issue_component.component = 'impl'  AND issue.assignee IS NOT NULL
+42 medium gold: SELECT DISTINCT assignee FROM issue as T1 JOIN issue_component as T2 ON T1.issue_id = T2.issue_id WHERE T2.component = "impl"
+
+43 medium pred: SELECT reporter, issue_id FROM issue ORDER BY reporter ASC
+43 medium gold: SELECT reporter, issue_id FROM issue ORDER BY reporter ASC
+
+44 medium pred: SELECT DISTINCT field FROM issue_changelog WHERE issue_id IN (     SELECT issue_id     FROM issue_fix_version     WHERE fix_version = '0.12.1' )
+44 medium gold: SELECT T1.field FROM issue_changelog AS T1 JOIN issue_fix_version AS T2 ON T1.issue_id = T2.issue_id WHERE T2.fix_version = "0.12.1"
+
+45 medium pred: SELECT issue_id, assignee FROM issue WHERE resolved_date >= '2014-09-08' AND resolved_date <= '2014-09-12'
+45 medium gold: SELECT issue_id, assignee FROM issue WHERE resolved_date BETWEEN '2014-09-08' AND '2014-09-12'
+
+eval_err_num:9
+46 extra pred: SELECT DISTINCT cc.file_path FROM code_change cc JOIN change_set AS cs ON cc.commit_hash = cs.commit_hash JOIN issue_fix_version AS ifv ON cs.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1'
+46 extra gold: SELECT DISTINCT T4.file_path FROM issue_changelog AS T1 JOIN issue_fix_version AS T2 ON T1.issue_id = T2.issue_id JOIN change_set_link AS T3 ON T1.issue_id = T3.issue_id JOIN code_change AS T4 ON T3.commit_hash = T4.commit_hash WHERE T2.fix_version = "0.12.1"
+
+47 easy pred: SELECT issue_id, created_date FROM issue WHERE created_date < '2014-09-12'
+47 easy gold: SELECT * FROM issue WHERE created_date < "2014-09-12"
+
+48 easy pred: SELECT * FROM issue WHERE created_date = '2017-03-28'
+48 easy gold: SELECT * FROM issue WHERE created_date = '2017-03-28'
+
+49 easy pred: SELECT issue_id FROM issue WHERE resolved_date = '2013-10-23'
+49 easy gold: SELECT issue_id FROM issue WHERE resolved_date = '2013-10-23'
+
+50 medium pred: SELECT assignee, COUNT(issue_id) FROM issue WHERE resolved_date >= '2015-03-01' AND resolved_date <= '2015-03-31' GROUP BY assignee HAVING COUNT(issue_id) >= 3
+50 medium gold: SELECT assignee FROM issue WHERE resolved_date BETWEEN '2015-03-01' AND '2015-03-31' GROUP BY assignee HAVING Count(issue_id) >= 3
+
+51 easy pred: SELECT COUNT(*)  FROM issue  WHERE resolved_date < '2013-10-27'
+51 easy gold: SELECT Count(*) FROM issue WHERE resolved_date < '2013-10-27'
+
+52 easy pred: SELECT issue_id FROM issue WHERE created_date > '2017-05-31'
+52 easy gold: SELECT * FROM issue WHERE created_date > '2017-05-31'
+
+53 easy pred: SELECT issue_id FROM issue WHERE resolved_date >= '2017-10-01' AND resolved_date <= '2017-10-31'
+53 easy gold: SELECT issue_id FROM issue WHERE resolved_date BETWEEN '2017-10-01' AND '2017-10-31'
+
+54 easy pred: SELECT issue_id FROM issue WHERE created_date >= '2017-01-01' AND created_date <= '2017-03-31'
+54 easy gold: SELECT issue_id FROM issue WHERE created_date BETWEEN '2017-01-01' AND '2017-03-31'
+
+55 extra pred: SELECT issue_id, type, priority FROM issue WHERE status = 'Open' AND created_date BETWEEN '2013-11-16' AND '2013-11-28' ORDER BY type, priority
+55 extra gold: SELECT issue_id, type, priority FROM issue WHERE status = 'Open' AND created_date BETWEEN '2013-11-16' AND '2013-11-28' ORDER BY type, priority
+
+56 medium pred: SELECT issue_id, status FROM issue WHERE type = 'Bug'
+56 medium gold: SELECT issue_id, status FROM issue WHERE type = 'Bug'
+
+57 medium pred: SELECT issue_id, resolution FROM issue WHERE type = 'bug'
+57 medium gold: SELECT issue_id, resolution FROM issue WHERE type = 'Bug'
+
+58 easy pred: SELECT type FROM issue WHERE issue_id = 'PIG-3599'
+58 easy gold: SELECT type FROM issue WHERE issue_id = 'PIG-3599'
+
+59 easy pred: SELECT resolved_date FROM issue WHERE issue_id = 'PIG-3599'
+59 easy gold: SELECT resolved_date FROM issue WHERE issue_id = "PIG-3599"
+
+60 easy pred: SELECT issue_id, description FROM issue
+60 easy gold: SELECT * FROM issue
+
+61 easy pred: SELECT DISTINCT priority FROM issue 
+61 easy gold: SELECT DISTINCT priority FROM issue
+
+62 easy pred: SELECT DISTINCT status FROM issue WHERE type = 'Apache Pig'
+62 easy gold: SELECT DISTINCT status FROM issue
+
+63 easy pred: SELECT DISTINCT resolution FROM issue 
+63 easy gold: SELECT DISTINCT resolution FROM issue
+
+64 easy pred: SELECT commit_hash FROM change_set
+64 easy gold: SELECT commit_hash FROM change_set
+
+65 easy pred: SELECT DISTINCT author_email FROM change_set
+65 easy gold: SELECT DISTINCT author_email FROM change_set
+
+66 easy pred: SELECT DISTINCT component FROM issue_component 
+66 easy gold: SELECT DISTINCT component FROM issue_component
+
+eval_err_num:10
+67 medium pred: SELECT issue_fix_version.fix_version, COUNT(issue_fix_version.issue_id), GROUP_CONCAT(issue_fix_version.issue_id) FROM issue_fix_version JOIN issue ON issue_fix_version.issue_id = issue.issue_id WHERE issue.resolution IS NOT NULL GROUP BY issue_fix_version.fix_version
+67 medium gold: SELECT fix_version, Count(issue_id) FROM issue_fix_version GROUP BY fix_version
+
+eval_err_num:11
+68 hard pred: SELECT fix_version, COUNT(issue_id) AS num_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_issues DESC LIMIT 1
+68 hard gold: SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1
+
+69 medium pred: SELECT status FROM issue WHERE created_date = (SELECT MAX(created_date) FROM issue) LIMIT 1
+69 medium gold: SELECT status FROM issue ORDER BY created_date DESC LIMIT 1
+
+70 easy pred: SELECT fix_version FROM issue_fix_version WHERE issue_id = 'PIG-3599'
+70 easy gold: SELECT fix_version FROM issue_fix_version WHERE issue_id = "PIG-3599"
+
+71 medium pred: SELECT created_date, COUNT(*) FROM issue GROUP BY created_date
+71 medium gold: SELECT created_date, Count(*) FROM issue GROUP BY created_date
+
+72 medium pred: SELECT updated_date, COUNT(*) FROM issue GROUP BY updated_date
+72 medium gold: SELECT updated_date, Count(*) FROM issue GROUP BY updated_date
+
+73 medium pred: SELECT resolved_date, COUNT(*) FROM issue  GROUP BY resolved_date ORDER BY resolved_date
+73 medium gold: SELECT resolved_date, Count(*) FROM issue GROUP BY resolved_date
+
+74 medium pred: SELECT committed_date, COUNT(*) FROM change_set GROUP BY committed_date
+74 medium gold: SELECT committed_date, Count(*) FROM change_set GROUP BY committed_date
+
+eval_err_num:12
+75 extra pred: SELECT issue_id, resolved_date FROM issue WHERE assignee = 'Daniel Ward' AND resolution IS NOT NULL ORDER BY resolved_date DESC
+75 extra gold: SELECT resolved_date, issue_id FROM issue WHERE assignee = "Daniel Ward" AND resolved_date != 'NULL' order by resolved_date DESC
+
+76 medium pred: SELECT COUNT(*)  FROM issue  WHERE resolved_date >= '2014-10-01'  AND resolved_date <= '2014-10-31'  AND assignee = 'John Stark'
+76 medium gold: SELECT Count(*) FROM issue WHERE assignee = "John Stark" AND resolved_date BETWEEN '2014-10-01' AND '2014-10-31'
+
+77 easy pred: SELECT COUNT(*)  FROM issue  WHERE created_date >= '2015-01-01' AND created_date <= '2015-04-30'
+77 easy gold: SELECT count(*) FROM issue WHERE created_date BETWEEN '2015-01-01' AND '2015-04-30'
+
+eval_err_num:13
+78 hard pred: SELECT created_date, COUNT(issue_id) AS issue_count FROM issue GROUP BY created_date ORDER BY issue_count DESC LIMIT 1
+78 hard gold: SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1
+
+eval_err_num:14
+79 hard pred: SELECT resolved_date, COUNT(issue_id) AS num_resolved FROM issue  GROUP BY resolved_date ORDER BY num_resolved DESC LIMIT 1
+79 hard gold: SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY Count(issue_id) DESC LIMIT 1
+
+80 easy pred: SELECT COUNT(*)  FROM issue
+80 easy gold: SELECT Count(*) FROM issue
+
+81 easy pred: SELECT COUNT(DISTINCT type) FROM issue
+81 easy gold: SELECT Count(DISTINCT type) FROM issue
+
+82 medium pred: SELECT type, COUNT(*) FROM issue GROUP BY type
+82 medium gold: SELECT type, Count(*) FROM issue GROUP BY type
+
+83 easy pred: SELECT COUNT(DISTINCT priority) FROM issue
+83 easy gold: SELECT Count(DISTINCT priority) FROM issue
+
+84 medium pred: SELECT priority, COUNT(*) FROM issue  GROUP BY priority
+84 medium gold: SELECT priority, Count(*) FROM issue GROUP BY priority;
+
+85 easy pred: SELECT COUNT(DISTINCT status) FROM issue
+85 easy gold: SELECT Count(DISTINCT status) FROM issue
+
+86 easy pred: SELECT resolution, COUNT(*) FROM issue  GROUP BY resolution
+86 easy gold: SELECT Count(DISTINCT resolution) FROM issue
+
+87 easy pred: SELECT COUNT(DISTINCT assignee) FROM issue 
+87 easy gold: SELECT Count(DISTINCT assignee) FROM issue
+
+eval_err_num:15
+88 medium pred: SELECT assignee, COUNT(*) AS assignee_count FROM issue  GROUP BY assignee ORDER BY assignee_count DESC
+88 medium gold: SELECT assignee, Count(*) FROM issue GROUP BY assignee
+
+89 easy pred: SELECT COUNT(DISTINCT assignee_username) FROM issue 
+89 easy gold: SELECT Count(DISTINCT assignee_username) FROM issue
+
+eval_err_num:16
+90 medium pred: SELECT assignee_username, COUNT(*) AS count FROM issue  GROUP BY assignee_username ORDER BY count DESC
+90 medium gold: SELECT assignee_username, Count(*) FROM issue GROUP BY assignee_username
+
+91 easy pred: SELECT COUNT(DISTINCT reporter) FROM issue
+91 easy gold: SELECT Count(DISTINCT reporter) FROM issue
+
+92 medium pred: SELECT username, COUNT(*) FROM issue_comment GROUP BY username
+92 medium gold: SELECT username, Count(*) FROM issue_comment GROUP BY username
+
+eval_err_num:17
+93 medium pred: SELECT reporter, COUNT(*) AS mentions FROM issue  GROUP BY reporter ORDER BY mentions DESC
+93 medium gold: SELECT reporter, Count(*) FROM issue GROUP BY reporter
+
+eval_err_num:18
+94 easy pred: SELECT reporter_username, COUNT(*) AS frequency FROM issue GROUP BY reporter_username ORDER BY frequency DESC
+94 easy gold: SELECT Count(DISTINCT reporter_username) FROM issue
+
+95 medium pred: SELECT reporter_username, COUNT(*) FROM issue  GROUP BY reporter_username
+95 medium gold: SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username
+
+96 easy pred: SELECT COUNT(*) FROM change_set
+96 easy gold: SELECT Count(*) FROM change_set
+
+97 easy pred: SELECT COUNT(DISTINCT author) FROM change_set
+97 easy gold: SELECT Count(DISTINCT author) FROM change_set
+
+eval_err_num:19
+98 medium pred: SELECT display_name, COUNT(*) AS comment_count FROM issue_comment GROUP BY display_name ORDER BY comment_count DESC
+98 medium gold: SELECT display_name, Count(*) FROM issue_comment GROUP BY display_name
+
+99 easy pred: SELECT DISTINCT username FROM issue_comment
+99 easy gold: SELECT DISTINCT username FROM issue_comment
+
+100 easy pred: SELECT COUNT(DISTINCT component)  FROM issue_component
+100 easy gold: SELECT Count(DISTINCT component) FROM issue_component
+
+eval_err_num:20
+101 medium pred: SELECT ic.component, COUNT(*) AS mentions FROM issue_component ic JOIN issue AS i ON ic.issue_id = i.issue_id GROUP BY ic.component ORDER BY mentions DESC
+101 medium gold: SELECT T2.component, Count(*) FROM issue AS T1 JOIN issue_component AS T2 ON T1.issue_id = T2.issue_id GROUP BY T2.component
+
+102 easy pred: SELECT COUNT(DISTINCT name) FROM issue_link
+102 easy gold: SELECT Count(DISTINCT name) FROM issue_link
+
+103 medium pred: SELECT issue_link.name, COUNT(*) FROM issue_link GROUP BY issue_link.name
+103 medium gold: SELECT name, Count(*) FROM issue_link GROUP BY name
+
+104 easy pred: SELECT COUNT(*)  FROM issue  WHERE type = 'bug'
+104 easy gold: SELECT Count(*) FROM issue WHERE type = 'Bug'
+
+105 easy pred: SELECT DISTINCT assignee FROM issue 
+105 easy gold: SELECT DISTINCT assignee FROM issue
+
+106 easy pred: SELECT DISTINCT assignee_username FROM issue 
+106 easy gold: SELECT DISTINCT assignee_username FROM issue
+
+107 easy pred: SELECT DISTINCT reporter FROM issue 
+107 easy gold: SELECT DISTINCT reporter FROM issue
+
+108 easy pred: SELECT DISTINCT reporter_username FROM issue 
+108 easy gold: SELECT DISTINCT reporter_username FROM issue
+
+109 easy pred: SELECT DISTINCT author FROM change_set
+109 easy gold: SELECT DISTINCT author FROM change_set
+
+110 medium pred: SELECT display_name, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name
+110 medium gold: SELECT display_name, Count(message) FROM issue_comment WHERE issue_id = "PIG-3592" GROUP BY display_name
+
+111 medium pred: SELECT DISTINCT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue_link JOIN issue ON issue_link.target_issue_id = issue.issue_id JOIN change_set_link ON issue_link.source_issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash
+111 medium gold: SELECT T1.issue_id, T1.created_date, T1.resolved_date, T3.commit_hash, T3.committed_date FROM issue AS T1 JOIN change_set_link AS T2 ON T1.issue_id = T2.issue_id JOIN change_set AS T3 ON T2.commit_hash = T3.commit_hash
+
+eval_err_num:21
+112 easy pred: SELECT DISTINCT issue.* FROM issue JOIN change_set_link ON issue.issue_id = change_set_link.issue_id
+112 easy gold: SELECT * FROM issue AS T1 JOIN change_set_link AS T2 ON T1.issue_id = T2.issue_id
+
+eval_err_num:22
+113 extra pred: SELECT COUNT(DISTINCT issue_id)  FROM issue  LEFT JOIN change_set_link ON issue.issue_id = change_set_link.issue_id  WHERE change_set_link.commit_hash IS NULL
+113 extra gold: SELECT Count(*) FROM issue AS T1 WHERE T1.issue_id NOT IN (SELECT T2.issue_id FROM change_set_link AS T2)
+
+114 easy pred: SELECT COUNT(DISTINCT issue_id)  FROM change_set_link  GROUP BY issue_id  HAVING COUNT(commit_hash) > 1
+114 easy gold: SELECT Count(*) FROM (SELECT Count(commit_hash) FROM change_set_link GROUP BY issue_id HAVING Count(commit_hash) > 1)
+
+115 easy pred: SELECT COUNT(DISTINCT issue_id)  FROM change_set_link  GROUP BY issue_id  HAVING COUNT(commit_hash) = 1
+115 easy gold: SELECT Count(*) FROM (SELECT Count(commit_hash) FROM change_set_link GROUP BY issue_id HAVING Count(commit_hash) = 1)
+
+116 medium pred: SELECT username, COUNT(DISTINCT issue_id) FROM issue_comment GROUP BY username
+116 medium gold: SELECT username, Count(DISTINCT issue_id) FROM issue_comment GROUP BY username
+
+117 medium pred: SELECT issue_id, COUNT(DISTINCT username) FROM issue_comment GROUP BY issue_id
+117 medium gold: SELECT issue_id, Count(DISTINCT username) FROM issue_comment GROUP BY issue_id
+
+118 medium pred: SELECT issue_id, COUNT(*) FROM issue_comment GROUP BY issue_id
+118 medium gold: SELECT issue_id, Count(message) FROM issue_comment GROUP BY issue_id
+
+119 medium pred: SELECT issue_id, summary, description FROM issue
+119 medium gold: SELECT issue_id, summary, description FROM issue
+
+120 extra pred: SELECT DISTINCT change_set.commit_hash FROM change_set JOIN issue ON change_set.commit_hash = issue_fix_version.issue_id WHERE issue.issue_id = 'PIG-3592' AND change_set.committed_date >= issue.created_date AND change_set.committed_date <= issue.resolved_date
+120 extra gold: SELECT commit_hash FROM change_set WHERE committed_date >= (SELECT created_date FROM issue WHERE issue_id = 'PIG-3592') AND committed_date <= (SELECT resolved_date FROM issue WHERE issue_id = 'PIG-3592')
+
+eval_err_num:23
+121 extra pred: ERROR
+121 extra gold: SELECT type, Count(*) FROM issue GROUP BY type HAVING type = 'Bug' OR type = 'Improvement'
+
+122 hard pred: SELECT COUNT(DISTINCT file_path)  FROM code_change  WHERE commit_hash IN (     SELECT commit_hash      FROM change_set_link      WHERE issue_id = 'PIG-3599' )
+122 hard gold: SELECT Count(T1.file_path) FROM code_change AS T1 JOIN change_set_link AS T2 ON T1.commit_hash = T2.commit_hash JOIN issue AS T3 ON T2.issue_id = T3.issue_id WHERE T3.issue_id = 'PIG-3422'
+
+123 extra pred: SELECT MIN(sum_added_lines + sum_removed_lines) FROM code_change JOIN change_set_link ON code_change.commit_hash = change_set_link.commit_hash JOIN issue_fix_version ON change_set_link.issue_id = issue_fix_version.issue_id JOIN issue ON issue_fix_version.issue_id = issue.issue_id WHERE issue.type = 'Bug'
+123 extra gold: SELECT Count(file_path) FROM code_change AS T1 JOIN change_set_link AS T2 ON T1.commit_hash = T2.commit_hash JOIN issue AS T3 ON T2.issue_id = T3.issue_id WHERE T3.type = 'Bug' GROUP BY T3.issue_id ORDER BY Count(file_path) ASC LIMIT 1
+
+124 extra pred: SELECT COUNT(*)  FROM issue_link  WHERE source_issue_id IN (     SELECT issue_id      FROM issue      WHERE type = 'bug' )  AND target_issue_id IN (     SELECT issue_id      FROM issue      WHERE type = 'improvement' )
+124 extra gold: SELECT Count(*) FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T2.type = 'Bug' and T3.type = 'Improvement' GROUP BY T2.type, T3.type
+
+eval_err_num:24
+125 extra pred: SELECT il.source_issue_id, il.target_issue_id FROM issue_link il JOIN issue AS i1 ON il.source_issue_id = i1.issue_id AND i1.type = 'bug' JOIN issue AS i2 ON il.target_issue_id = i2.issue_id AND i2.type = 'improvement'
+125 extra gold: SELECT T1.source_issue_id, T1.target_issue_id FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T2.type = 'Improvement' AND T3.type = 'Bug' ORDER BY T1.source_issue_id DESC
+
+126 easy pred: SELECT DISTINCT name FROM issue_link WHERE source_issue_id IN (     SELECT issue_id     FROM issue     WHERE type = 'apache pig' )
+126 easy gold: SELECT DISTINCT name FROM issue_link
+
+eval_err_num:25
+127 extra pred: SELECT source.type AS source_type, target.type AS target_type, COUNT(*) FROM issue_link JOIN issue AS source ON issue_link.source_issue_id = source.issue_id JOIN issue AS target ON issue_link.target_issue_id = target.issue_id WHERE issue_link.name = 'Cloners' GROUP BY source_type, target_type
+127 extra gold: SELECT T2.type, T3.type, Count(*) FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T1.name = "Cloners" GROUP BY T2.type, T3.type
+
+128 hard pred: SELECT DISTINCT source.type, target.type FROM issue_link JOIN issue AS source ON source.issue_id = issue_link.source_issue_id JOIN issue AS target ON target.issue_id = issue_link.target_issue_id WHERE issue_link.name = 'Cloners'
+128 hard gold: SELECT DISTINCT T2.type, T3.type FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T1.name = "Cloners"
+
+129 easy pred: SELECT DISTINCT type FROM issue
+129 easy gold: SELECT DISTINCT type FROM issue
+
+130 easy pred: SELECT * FROM issue WHERE type = 'Bug'
+130 easy gold: SELECT * FROM issue WHERE type = 'Bug'
+
+131 hard pred: SELECT * FROM issue WHERE status != 'In Progress'
+131 hard gold: SELECT * FROM issue EXCEPT SELECT * FROM issue WHERE issue.status = 'In Progress'
+
+eval_err_num:26
+132 extra pred: SELECT MAX(num_file_paths) FROM (   SELECT COUNT(DISTINCT cc.file_path) AS num_file_paths   FROM issue i   JOIN issue_fix_version AS ifv ON i.issue_id = ifv.issue_id   JOIN change_set_link AS csl ON i.issue_id = csl.issue_id   JOIN change_set AS cs ON csl.commit_hash = cs.commit_hash   JOIN code_change AS cc ON cs.commit_hash = cc.commit_hash   WHERE
+132 extra gold: SELECT Count(file_path) FROM code_change AS T1 JOIN change_set_link AS T2 ON T1.commit_hash = T2.commit_hash JOIN issue AS T3 ON T2.issue_id = T3.issue_id WHERE T3.type = 'Improvement' GROUP BY T3.issue_id ORDER BY Count(file_path) DESC LIMIT 1
+
+                     easy                 medium               hard                 extra                all                 
+count                56                   54                   11                   12                   133                 
+=====================   EXECUTION ACCURACY     =====================
+execution            0.786                0.537                0.182                0.083                0.571               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.732                0.574                0.091                0.083                0.556               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.870                0.886                1.000                0.750                0.879               
+select(no AGG)       0.870                0.886                1.000                0.750                0.879               
+where                0.769                0.778                0.200                0.500                0.710               
+where(no OP)         0.769                0.778                0.400                0.500                0.726               
+group(no Having)     0.250                1.000                0.000                0.000                0.857               
+group                0.250                1.000                0.000                0.000                0.857               
+order                0.000                0.667                0.000                1.000                0.750               
+and/or               1.000                1.000                0.818                0.833                0.969               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.833                0.902                0.400                0.500                0.825               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.839                0.722                0.455                0.250                0.707               
+select(no AGG)       0.839                0.722                0.455                0.250                0.707               
+where                0.833                0.750                0.200                0.182                0.647               
+where(no OP)         0.833                0.750                0.400                0.182                0.662               
+group(no Having)     1.000                0.680                0.000                0.000                0.486               
+group                1.000                0.680                0.000                0.000                0.486               
+order                0.000                0.500                0.000                0.167                0.200               
+and/or               0.929                0.963                1.000                1.000                0.953               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             1.000                0.725                0.182                0.167                0.667               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               0.855                0.796                0.625                0.375                0.783               
+select(no AGG)       0.855                0.796                0.625                0.375                0.783               
+where                0.800                0.764                0.200                0.267                0.677               
+where(no OP)         0.800                0.764                0.400                0.267                0.692               
+group(no Having)     0.400                0.810                1.000                1.000                0.621               
+group                0.400                0.810                1.000                1.000                0.621               
+order                1.000                0.571                1.000                0.286                0.316               
+and/or               0.963                0.981                0.900                0.909                0.961               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.909                0.804                0.250                0.250                0.737               

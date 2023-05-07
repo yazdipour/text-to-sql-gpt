@@ -31,6 +31,7 @@ def format_predictions(in_filename):
         for q in predicted_queries:
             output_file.write(q + '\n')
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("format_predictions() takes 1 argument: the predictions filename")

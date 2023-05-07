@@ -558,6 +558,9 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
         p_str = remove_unused_alias(p_str)
         p_str = p_str.replace("INNER JOIN", "JOIN")
         p_str = add_as_keyword(p_str)
+        # replace 'where \w+ IS NOT NULL' with "" ignorecase
+        p_str = re.sub(r'WHERE\s+\w+\s+IS\s+NOT\s+NULL',
+                       "", p_str, flags=re.IGNORECASE)
         g_str, db = g
         db_name = db
         db = os.path.join(db_dir, db, f"{db}.sqlite")

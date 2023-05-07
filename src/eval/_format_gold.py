@@ -41,6 +41,6 @@ def format_sql_field(json_filename, db_dir):
 if __name__ == "__main__":
     json_filename = "../../data/seoss/gold_pig_not_specific.json"
     db_dir = "../../data/seoss/database"
-    gold_filename = "gold_pig_specific.sql"
+    gold_filename = "gold_pig_not_specific.sql"
     format_sql_field(json_filename, db_dir)
     format_gold(json_filename, gold_filename)
