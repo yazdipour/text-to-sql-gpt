@@ -1,0 +1,189 @@
+SELECT issue_id FROM issue WHERE type = 'Bug' _EX _EM
+SELECT issue_id FROM issue WHERE type = 'Bug' _EX _EM
+SELECT issue_id FROM issue WHERE type = 'Bug' _EX _EM
+SELECT issue_id FROM issue WHERE status = 'buggy'
+SELECT issue_id FROM issue WHERE type = 'Bug' _EX _EM
+SELECT issue_id FROM issue WHERE type = 'Bug' _EX _EM
+SELECT issue_id FROM issue WHERE type = 'Bug' _EX _EM
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE type = 'Bug' AND priority = 'Major' _EX _EM
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE priority = 'Major' AND type = 'Bug' _EX _EM
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE priority = 'Major' AND type = 'Bug' _EX _EM
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE type = 'Bug' AND priority = 'Major' _EX _EM
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE type = 'bug' AND priority = 'major' _EM
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE type = 'bug' AND priority = 'major' _EM
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE type = 'bug' AND priority = 'major' ORDER BY issue_id
+SELECT issue_id, type, priority FROM issue WHERE status = 'Open' ORDER BY type, priority _EX _EM
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE priority = 'Major' AND type = 'Bug'
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE priority = 'Major' AND type = 'Bug'
+SELECT issue_id, status, resolution, summary, description FROM issue WHERE type = 'Bug' AND priority = 'Major'
+SELECT issue_id, type, priority FROM issue WHERE status = 'open' ORDER BY type, priority _EM
+SELECT issue_id, type, priority FROM issue WHERE status = 'Open' ORDER BY type, priority _EX _EM
+SELECT issue_id, type, priority FROM issue WHERE status = 'Open' ORDER BY type, priority _EX _EM
+SELECT commit_hash, message FROM change_set _EX _EM
+SELECT commit_hash, message FROM change_set _EX _EM
+SELECT commit_hash, message FROM change_set _EX _EM
+SELECT commit_hash, message FROM change_set _EX _EM
+SELECT commit_hash, message FROM change_set _EX _EM
+SELECT commit_hash, message FROM change_set _EX _EM
+SELECT commit_hash, message FROM change_set _EX _EM
+SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT issue.type, COUNT(*) AS mentions FROM issue_comment JOIN issue ON issue_comment.issue_id = issue.issue_id GROUP BY issue.type ORDER BY mentions DESC LIMIT 1
+SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT assignee, Count(issue_id) FROM issue WHERE status = "Open" GROUP BY assignee ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
+SELECT assignee_username, COUNT(*) AS num_assigned_issues FROM issue GROUP BY assignee_username ORDER BY num_assigned_issues DESC LIMIT 1
+SELECT assignee, COUNT(*) AS issue_count FROM issue GROUP BY assignee ORDER BY issue_count DESC LIMIT 1
+SELECT assignee, COUNT(*) AS assigned_issues_count FROM issue GROUP BY assignee ORDER BY assigned_issues_count DESC LIMIT 1
+SELECT assignee, Count(issue_id) FROM issue WHERE status = "Open" GROUP BY assignee ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
+SELECT issue.assignee, COUNT(issue.issue_id) AS num_assigned_issues FROM issue WHERE issue.status = 'Open' GROUP BY issue.assignee HAVING COUNT(issue.issue_id) = (   SELECT MAX(num_assigned_issues)   FROM (     SELECT COUNT(issue.issue_id) AS num_assigned_issues     FROM issue     WHERE issue.status = 'Open'     GROUP BY issue.assignee   ) )
+SELECT assignee, COUNT(*) FROM issue WHERE status = 'Open' GROUP BY assignee HAVING COUNT(*) = (   SELECT MAX(issue_count)   FROM (     SELECT COUNT(*) AS issue_count     FROM issue     WHERE status = 'Open'     GROUP BY assignee   ) )
+SELECT status, COUNT(*) FROM issue GROUP BY status
+SELECT status, COUNT(*) FROM issue GROUP BY status
+SELECT type, status, COUNT(*) FROM issue GROUP BY type, status
+SELECT type, COUNT(DISTINCT status) FROM issue GROUP BY type
+SELECT status, COUNT(*) FROM issue GROUP BY status
+SELECT status, COUNT(*) FROM issue GROUP BY status
+SELECT status, COUNT(*) FROM issue GROUP BY status
+SELECT il.source_issue_id, il.target_issue_id FROM issue_link AS il WHERE il.name = 'Blocker' _EX _EM
+SELECT DISTINCT il1.source_issue_id, il1.target_issue_id FROM issue_link il1 JOIN issue_link AS il2 ON il1.source_issue_id = il2.target_issue_id AND il1.target_issue_id = il2.source_issue_id WHERE il1.is_containment = 0 AND il2.is_containment = 0 AND il1.source_issue_id < il1.target_issue_id
+SELECT DISTINCT il.source_issue_id, il.target_issue_id FROM issue_link AS il WHERE il.name = 'Blocks' _EM
+SELECT il.source_issue_id, il.target_issue_id FROM issue_link AS il WHERE il.name = 'Blocker' _EX _EM
+SELECT source_issue_id, target_issue_id FROM issue_link WHERE name = 'Blocker' _EX _EM
+SELECT il.source_issue_id, il.target_issue_id FROM issue_link AS il WHERE il.name = 'Blocker' _EX _EM
+SELECT il.source_issue_id, il.target_issue_id FROM issue_link AS il WHERE il.name = 'Blocker' _EX _EM
+SELECT DISTINCT i.issue_id, i.priority FROM issue i JOIN issue_link AS il ON i.issue_id = il.source_issue_id OR i.issue_id = il.target_issue_id WHERE i.priority = 'Blocker' OR i.priority = 'Critical'
+SELECT issue_id, summary, priority FROM issue WHERE priority = 'Blocker' OR priority = 'Critical'
+SELECT * FROM issue WHERE priority = 'blocking' OR priority = 'critical' _EM
+SELECT * FROM issue WHERE priority = 'blocking' OR priority = 'critical' _EM
+SELECT * FROM issue WHERE priority = 'Blocker' OR priority = 'Critical' _EX _EM
+SELECT * FROM issue WHERE priority = 'Blocker' OR priority = 'Critical' _EX _EM
+SELECT * FROM issue WHERE priority = 'Blocker' OR priority = 'Critical' _EX _EM
+SELECT DISTINCT change_set.author_email FROM change_set JOIN change_set_link ON change_set.commit_hash = change_set_link.commit_hash WHERE change_set_link.issue_id = 'PIG-3592' _EX _EM
+SELECT i.assignee FROM issue AS i WHERE i.issue_id = 'PIG-3592'
+SELECT ia.username FROM issue_attachment ia JOIN issue AS i ON ia.issue_id = i.issue_id WHERE i.issue_id = 'PIG-3592' AND ia.mime_type = 'text/plain' AND ia.filename = 'patch.txt'
+SELECT issue.assignee FROM issue WHERE issue.issue_id = 'PIG-3592'
+SELECT DISTINCT change_set.author_email FROM change_set JOIN change_set_link ON change_set.commit_hash = change_set_link.commit_hash WHERE change_set_link.issue_id = 'PIG-3592' _EX _EM
+SELECT DISTINCT author_email FROM change_set WHERE commit_hash IN (   SELECT commit_hash   FROM change_set_link   WHERE issue_id = 'PIG-3592' ) _EX
+SELECT DISTINCT change_set.author_email FROM change_set JOIN change_set_link ON change_set.commit_hash = change_set_link.commit_hash WHERE change_set_link.issue_id = 'PIG-3592' _EX _EM
+SELECT DISTINCT field FROM issue_changelog WHERE fix_version = '0.12.1'
+SELECT ic.message FROM issue_fix_version ifv JOIN issue_changelog AS ic ON ifv.issue_id = ic.issue_id WHERE ifv.fix_version = '0.12.1' AND ic.field = 'status'
+SELECT issue_changelog.issue_id, issue_changelog.username, issue_changelog.created_date, issue_changelog.field, issue_changelog.from_value, issue_changelog.to_value FROM issue_changelog JOIN issue_fix_version ON issue_changelog.issue_id = issue_fix_version.issue_id WHERE issue_fix_version.fix_version = '0.12.1'
+SELECT cs.commit_hash, cs.committed_date, cs.message, cc.file_path, cc.change_type FROM change_set cs JOIN code_change AS cc ON cs.commit_hash = cc.commit_hash JOIN git_repository AS gr ON cs.git_repository_id = gr.git_repository_id JOIN issue_fix_version AS ifv ON cs.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1' AND gr.name = 'apache Pig'
+SELECT DISTINCT field FROM issue_changelog WHERE issue_id IN (   SELECT issue_id   FROM issue_fix_version   WHERE fix_version = '0.12.1' )
+SELECT DISTINCT field FROM issue_changelog WHERE to_value = '0.12.1'
+SELECT DISTINCT field FROM issue_changelog WHERE issue_id IN (  SELECT issue_id  FROM issue_fix_version  WHERE fix_version = '0.12.1' )
+SELECT DISTINCT cc.file_path FROM code_change cc JOIN change_set AS cs ON cc.commit_hash = cs.commit_hash JOIN issue_fix_version AS ifv ON cs.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1'
+SELECT DISTINCT cc.file_path FROM code_change cc JOIN change_set AS cs ON cc.commit_hash = cs.commit_hash JOIN issue_fix_version AS ifv ON cs.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1' AND cc.change_type = 'MODIFY'
+SELECT DISTINCT cc.file_path FROM code_change cc JOIN change_set AS cs ON cc.commit_hash = cs.commit_hash JOIN git_repository AS gr ON cs.git_repository_id = gr.git_repository_id JOIN issue_fix_version AS ifv ON cs.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1'
+SELECT DISTINCT cc.file_path FROM code_change cc JOIN change_set AS cs ON cc.commit_hash = cs.commit_hash JOIN change_set_link AS csl ON cs.commit_hash = csl.commit_hash JOIN issue_fix_version AS ifv ON csl.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1'
+SELECT DISTINCT cc.file_path FROM code_change cc JOIN change_set AS cs ON cc.commit_hash = cs.commit_hash JOIN issue_fix_version AS ifv ON cs.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1'
+SELECT DISTINCT cc.file_path FROM code_change cc JOIN change_set AS cs ON cc.commit_hash = cs.commit_hash JOIN issue_fix_version AS ifv ON cs.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1'
+SELECT DISTINCT cc.file_path FROM code_change cc JOIN change_set AS cs ON cc.commit_hash = cs.commit_hash JOIN issue_fix_version AS ifv ON cs.issue_id = ifv.issue_id WHERE ifv.fix_version = '0.12.1'
+SELECT COUNT(*) FROM issue WHERE resolved_date < '2013-10-27' _EX _EM
+SELECT COUNT(*) FROM issue WHERE resolved_date < '2013-10-27' _EX _EM
+SELECT COUNT(*) FROM issue WHERE resolved_date < '2013-10-27' _EX _EM
+SELECT COUNT(*) FROM issue WHERE resolved_date < '2013-10-27' _EX _EM
+SELECT COUNT(*) FROM issue WHERE resolved_date < '2013-10-27' _EX _EM
+SELECT COUNT(*) FROM issue WHERE resolved_date < '2013-10-27' _EX _EM
+SELECT COUNT(*) FROM issue WHERE resolved_date < '2013-10-27' _EX _EM
+SELECT DISTINCT resolution FROM issue  _EX _EM
+SELECT DISTINCT resolution FROM issue  _EX _EM
+SELECT DISTINCT resolution FROM issue  _EX _EM
+SELECT DISTINCT resolution FROM issue  _EX _EM
+SELECT DISTINCT resolution FROM issue  _EX _EM
+SELECT DISTINCT resolution FROM issue  _EX _EM
+SELECT DISTINCT resolution FROM issue  _EX _EM
+SELECT fix_version, COUNT(issue_id) FROM issue_fix_version GROUP BY fix_version _EX _EM
+SELECT fix_version, COUNT(issue_id) FROM issue_fix_version GROUP BY fix_version _EX _EM
+SELECT fix_version, COUNT(issue_id) FROM issue_fix_version GROUP BY fix_version _EX _EM
+SELECT fix_version, COUNT(issue_id) FROM issue_fix_version JOIN issue ON issue_fix_version.issue_id = issue.issue_id GROUP BY fix_version
+SELECT issue_fix_version.fix_version, COUNT(issue_fix_version.issue_id), GROUP_CONCAT(issue_fix_version.issue_id) FROM issue_fix_version JOIN issue ON issue_fix_version.issue_id = issue.issue_id WHERE issue.resolution IS NOT NULL GROUP BY issue_fix_version.fix_version
+SELECT fix_version, COUNT(issue_id) FROM issue_fix_version GROUP BY fix_version _EX _EM
+SELECT fix_version, COUNT(issue_id) FROM issue_fix_version GROUP BY fix_version _EX _EM
+SELECT updated_date, COUNT(*) FROM issue GROUP BY updated_date ORDER BY updated_date ASC _EX
+SELECT updated_date, COUNT(*) FROM issue GROUP BY updated_date ORDER BY updated_date ASC _EX
+SELECT updated_date, Count(*) FROM issue GROUP BY updated_date _EX _EM
+SELECT DISTINCT issue_changelog.created_date AS date, COUNT(DISTINCT issue_changelog.issue_id) FROM issue_changelog GROUP BY issue_changelog.created_date ORDER BY issue_changelog.created_date ASC
+SELECT updated_date, COUNT(*) FROM issue GROUP BY updated_date _EX _EM
+SELECT updated_date, COUNT(*) FROM issue GROUP BY updated_date ORDER BY updated_date ASC _EX
+SELECT updated_date, COUNT(*) FROM issue GROUP BY updated_date _EX _EM
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY COUNT(*) DESC LIMIT 1 _EX
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY COUNT(*) DESC LIMIT 1 _EX
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY COUNT(*) DESC LIMIT 1 _EX
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY COUNT(*) DESC LIMIT 1 _EX
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY COUNT(issue_id) DESC LIMIT 1 _EX _EM
+SELECT COUNT(DISTINCT resolution) FROM issue  _EX _EM
+SELECT resolution, COUNT(*) FROM issue GROUP BY resolution
+SELECT resolution, COUNT(*) FROM issue GROUP BY resolution
+SELECT DISTINCT resolution FROM issue 
+SELECT resolution, COUNT(*) FROM issue GROUP BY resolution
+SELECT COUNT(DISTINCT resolution) FROM issue  _EX _EM
+SELECT COUNT(DISTINCT resolution) FROM issue  _EX _EM
+SELECT COUNT(DISTINCT assignee_username) FROM issue _EX _EM
+SELECT issue_attachment.username, COUNT(*) AS count FROM issue_attachment JOIN issue ON issue_attachment.issue_id = issue.issue_id WHERE issue.type = 'Developer' GROUP BY issue_attachment.username ORDER BY count DESC
+SELECT assignee_username, Count(*) FROM issue GROUP BY assignee_username
+SELECT COUNT(DISTINCT assignee_username) FROM issue  _EX _EM
+SELECT COUNT(DISTINCT assignee_username) FROM issue  _EX _EM
+SELECT COUNT(DISTINCT assignee_username) FROM issue  _EX _EM
+SELECT COUNT(DISTINCT assignee_username) FROM issue _EX _EM
+SELECT username, COUNT(*) FROM issue_comment GROUP BY username _EX _EM
+SELECT username, COUNT(*) FROM issue_comment GROUP BY username _EX _EM
+SELECT username, COUNT(*) FROM issue_comment GROUP BY username _EX _EM
+SELECT username, COUNT(*) FROM issue_comment GROUP BY username _EX _EM
+SELECT username, COUNT(*) FROM issue_comment GROUP BY username _EX _EM
+SELECT username, Count(*) FROM issue_comment GROUP BY username _EX _EM
+SELECT username, COUNT(*) FROM issue_comment GROUP BY username _EX _EM
+SELECT display_name, COUNT(*) FROM issue_comment GROUP BY display_name _EX _EM
+SELECT username, COUNT(*) AS comment_count FROM issue_comment GROUP BY username ORDER BY comment_count DESC
+SELECT COUNT(*) FROM issue_comment
+SELECT username, COUNT(*) FROM issue_comment GROUP BY username
+SELECT display_name, Count(*) FROM issue_comment GROUP BY display_name _EX _EM
+SELECT DISTINCT display_name, created_date FROM issue_comment ORDER BY display_name, created_date
+SELECT display_name, COUNT(DISTINCT username) FROM issue_comment GROUP BY display_name
+SELECT component, COUNT(*) FROM issue_component GROUP BY component _EX
+SELECT component, COUNT(*) AS count FROM issue_component GROUP BY component ORDER BY count DESC
+SELECT component, COUNT(*) FROM issue_component GROUP BY component _EX
+SELECT COUNT(DISTINCT component) FROM issue_component
+SELECT T2.component, Count(*) FROM issue AS T1 JOIN issue_component AS T2 ON T1.issue_id = T2.issue_id GROUP BY T2.component _EX _EM
+SELECT component, COUNT(*) FROM issue_component GROUP BY component _EX
+SELECT component, COUNT(*) FROM issue_component GROUP BY component _EX
+SELECT ic.display_name, COUNT(ic.message) FROM issue_comment AS ic WHERE ic.issue_id = 'PIG-3592' GROUP BY ic.display_name _EX _EM
+SELECT username, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY username
+SELECT COUNT(*), username FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY username
+SELECT username, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY username
+SELECT display_name, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name
+SELECT display_name, COUNT(message) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name _EX _EM
+SELECT issue_comment.display_name, COUNT(issue_comment.message) FROM issue_comment WHERE issue_comment.issue_id = 'PIG-3592' GROUP BY issue_comment.display_name _EX _EM
+SELECT DISTINCT change_set.commit_hash FROM change_set JOIN issue_changelog ON change_set.commit_hash = issue_changelog.to_value JOIN issue ON issue_changelog.issue_id = issue.issue_id WHERE issue.issue_id = 'PIG-3592' AND change_set.committed_date >= issue.created_date AND change_set.committed_date <= issue.resolved_date
+SELECT commit_hash FROM change_set WHERE committed_date >= (   SELECT created_date   FROM issue   WHERE issue_id = 'PIG-3592' ) AND committed_date <= (   SELECT resolved_date   FROM issue   WHERE issue_id = 'PIG-3592' ) _EX _EM
+SELECT DISTINCT change_set.commit_hash FROM change_set JOIN change_set_link ON change_set.commit_hash = change_set_link.commit_hash JOIN issue ON change_set_link.issue_id = issue.issue_id WHERE issue.issue_id = 'PIG-3592' AND change_set.committed_date >= issue.created_date AND change_set.committed_date <= issue.resolved_date
+SELECT commit_hash FROM change_set WHERE committed_date_zoned >= (   SELECT created_date_zoned   FROM issue   WHERE issue_id = 'PIG-3592' ) AND committed_date_zoned <= (   SELECT COALESCE(resolved_date_zoned, NOW())   FROM issue   WHERE issue_id = 'PIG-3592' )
+SELECT DISTINCT change_set.commit_hash FROM change_set JOIN issue ON change_set.commit_hash = issue_fix_version.issue_id WHERE issue.issue_id = 'PIG-3592' AND change_set.committed_date >= issue.created_date AND change_set.committed_date <= issue.resolved_date
+SELECT commit_hash FROM change_set WHERE committed_date >= (   SELECT created_date   FROM issue   WHERE issue_id = 'PIG-3592' ) AND committed_date <= (   SELECT resolved_date   FROM issue   WHERE issue_id = 'PIG-3592' ) _EX _EM
+SELECT DISTINCT change_set_link.commit_hash FROM change_set_link JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash JOIN issue ON change_set_link.issue_id = issue.issue_id WHERE issue.issue_id = 'PIG-3592' AND change_set.committed_date >= issue.created_date AND change_set.committed_date <= issue.resolved_date
+SELECT type, COUNT(*) FROM issue WHERE type IN ('bug', 'improvement') GROUP BY type
+SELECT type, COUNT(*) FROM issue WHERE type IN ('Bug', 'Improvement') GROUP BY type
+SELECT COUNT(*) FROM issue WHERE type IN ('Bug', 'Improvement')
+SELECT  type,  COUNT(*) FROM  issue GROUP BY  type
+SELECT type, COUNT(*) FROM issue WHERE type = 'Bug' OR type = 'Improvement' GROUP BY type _EX
+SELECT type, COUNT(*) FROM issue WHERE type IN ('Bug', 'Improvement') GROUP BY type
+SELECT type, COUNT(*) FROM issue WHERE type IN ('Bug', 'Improvement') GROUP BY type
+SELECT source.type, target.type, COUNT(*) FROM issue_link JOIN issue AS source ON issue_link.source_issue_id = source.issue_id JOIN issue AS target ON issue_link.target_issue_id = target.issue_id WHERE issue_link.name = 'cloners' GROUP BY source.type, target.type _EM
+SELECT T1.type, COUNT(*) FROM issue AS T1 JOIN issue_link AS T2 ON T1.issue_id = T2.target_issue_id WHERE T2.name = 'cloners' GROUP BY T1.type
+SELECT T2.type, T3.type, Count(*) FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T1.name = "Cloners" GROUP BY T2.type, T3.type _EX _EM
+SELECT i.type, COUNT(*) as count FROM issue_link il JOIN issue AS i ON il.target_issue_id = i.issue_id WHERE il.name = 'Cloners' GROUP BY i.type
+SELECT source.type AS source_type, target.type AS target_type, COUNT(*) FROM issue_link JOIN issue AS source ON issue_link.source_issue_id = source.issue_id JOIN issue AS target ON issue_link.target_issue_id = target.issue_id WHERE issue_link.name = 'Cloners' GROUP BY source_type, target_type
+SELECT i1.type, i2.type, COUNT(*) FROM issue_link il JOIN issue AS i1 ON il.source_issue_id = i1.issue_id JOIN issue AS i2 ON il.target_issue_id = i2.issue_id WHERE il.name = 'Cloners' GROUP BY i1.type, i2.type
+SELECT   i1.type,   i2.type,   COUNT(*) FROM   issue_link il   JOIN issue AS i1 ON il.source_issue_id = i1.issue_id   JOIN issue AS i2 ON il.target_issue_id = i2.issue_id WHERE   il.name = 'Cloners' GROUP BY   i1.type, i2.type
+SELECT * FROM issue WHERE status = 'In Progress'
+SELECT * FROM issue WHERE status != 'In Progress'
+SELECT issue_id, summary, description, priority, status, resolution, assignee, reporter FROM issue WHERE status != 'In Progress'
+SELECT * FROM issue WHERE status != 'In Progress'
+SELECT * FROM issue WHERE status != 'In Progress'
+SELECT * FROM issue WHERE status != 'In Progress'
+SELECT issue_id, status FROM issue WHERE status != 'In Progress'
