@@ -79,7 +79,7 @@ with open(gold_json_path, "r") as f:
                 tokens, cost = chatgpt.cost(res, model=model_name)
                 sum_tokens += tokens
                 sum_costs += cost
-            except Exception:
+            except Exception as ex:
                 res = 'ERROR'
         predictions.append(f'{res}\t{db_name}\n')
 

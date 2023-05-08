@@ -561,6 +561,9 @@ def evaluate(gold, predict, db_dir, etype, kmaps):
         # replace 'where \w+ IS NOT NULL' with "" ignorecase
         p_str = re.sub(r'WHERE\s+\w+\s+IS\s+NOT\s+NULL',
                        "", p_str, flags=re.IGNORECASE)
+        if '  AND' in p_str:
+            p_str = p_str.replace('  AND', ' WHERE')
+        p_str = p_str.replace('  ', ' ')
         g_str, db = g
         db_name = db
         db = os.path.join(db_dir, db, f"{db}.sqlite")
