@@ -92,7 +92,7 @@ SELECT assignee_username, Count(*) FROM issue GROUP BY assignee_username	apache-
 SELECT COUNT(DISTINCT reporter) AS unique_reporters FROM issue	apache-pig
 SELECT username, COUNT(*) AS num_comments FROM issue_comment GROUP BY username	apache-pig
 SELECT reporter, Count(*) FROM issue GROUP BY reporter	apache-pig
-SELECT reporter_username, COUNT(*) AS frequency FROM issue GROUP BY reporter_username ORDER BY frequency DESC	apache-pig
+SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username	apache-pig
 SELECT reporter_username, COUNT(*) AS count_issues FROM issue WHERE reporter_username IS NOT NULL GROUP BY reporter_username	apache-pig
 SELECT COUNT(*) AS commit_count FROM change_set	apache-pig
 SELECT COUNT(DISTINCT author) AS num_authors FROM change_set	apache-pig

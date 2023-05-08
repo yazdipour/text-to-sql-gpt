@@ -156,9 +156,9 @@ SELECT author, COUNT(*) FROM change_set GROUP BY author _EX _EM
 SELECT change_set.author, COUNT(*) AS mentions FROM change_set JOIN change_set_link ON change_set.commit_hash = change_set_link.commit_hash JOIN issue ON change_set_link.issue_id = issue.issue_id WHERE issue.description LIKE '%' || change_set.author || '%' GROUP BY change_set.author ORDER BY mentions DESC
 SELECT author, COUNT(*) FROM change_set GROUP BY author  _EX _EM
 SELECT author, COUNT(*) FROM change_set GROUP BY author _EX _EM
-SELECT author, COUNT(*) FROM change_set GROUP BY author ORDER BY commit_count DESC
-SELECT author, COUNT(*) FROM change_set GROUP BY author ORDER BY commit_count DESC
-SELECT author, COUNT(*) AS mentions FROM change_set GROUP BY author ORDER BY mentions DESC
+SELECT author, COUNT(*) FROM change_set GROUP BY author _EX _EM
+SELECT author, COUNT(*) FROM change_set GROUP BY author _EX _EM
+SELECT author, Count(*) FROM change_set GROUP BY author _EX _EM
 SELECT commit_hash, message FROM change_set  _EX _EM
 SELECT commit_hash, message FROM change_set  _EX _EM
 SELECT commit_hash, message FROM change_set  _EX _EM
@@ -184,7 +184,7 @@ SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
 SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
 SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
 SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
-SELECT issue.type, COUNT(*) AS mentions FROM issue GROUP BY issue.type ORDER BY mentions DESC LIMIT 1
+SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
 SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1 _EX _EM
 SELECT issue.type, COUNT(*) AS count FROM issue GROUP BY issue.type ORDER BY count DESC LIMIT 1
 SELECT COUNT(*) FROM issue WHERE priority = 'Blocker' OR priority = 'Critical'  _EX _EM
@@ -194,13 +194,13 @@ SELECT COUNT(*) FROM issue WHERE priority = 'Blocker' OR priority = 'Critical' _
 SELECT COUNT(*) FROM issue WHERE priority = 'Blocker' OR priority = 'Critical' _EX _EM
 SELECT COUNT(*) FROM issue WHERE priority = 'Blocker' OR priority = 'Critical'  _EX _EM
 SELECT COUNT(*) FROM issue WHERE priority = 'Blocker' OR priority = 'Critical' _EX _EM
-SELECT file_path, COUNT(commit_hash) AS commit_count FROM code_change GROUP BY file_path ORDER BY commit_count DESC LIMIT 5
-SELECT file_path, COUNT(commit_hash) AS commit_count FROM code_change GROUP BY file_path ORDER BY commit_count DESC LIMIT 5
+SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5 _EX _EM
+SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5 _EX _EM
 SELECT file_path, SUM(sum_added_lines + sum_removed_lines) AS total_changes FROM code_change GROUP BY file_path ORDER BY total_changes DESC LIMIT 5
 SELECT file_path, SUM(sum_added_lines + sum_removed_lines) AS num_changes FROM code_change GROUP BY file_path ORDER BY num_changes DESC LIMIT 5
 SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5 _EX _EM
 SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5 _EX _EM
-SELECT file_path, COUNT(commit_hash) AS commit_count FROM code_change GROUP BY file_path ORDER BY commit_count DESC LIMIT 5
+SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5 _EX _EM
 SELECT assignee FROM issue GROUP BY assignee HAVING COUNT(DISTINCT issue_id) = 1  _EX _EM
 SELECT assignee, COUNT(*) FROM issue GROUP BY assignee HAVING COUNT(*) = 1
 SELECT DISTINCT assignee FROM issue GROUP BY assignee HAVING COUNT(DISTINCT issue_id) = 1 _EX _EM
@@ -298,7 +298,7 @@ SELECT DISTINCT(issue_attachment.username) FROM issue_attachment JOIN issue_comp
 SELECT DISTINCT assignee_username FROM issue JOIN issue_component ON issue.issue_id = issue_component.issue_id WHERE component = 'imp' AND assignee_username IN (  SELECT username   FROM meta   WHERE key = 'group' AND value = 'developers' )
 SELECT DISTINCT issue.assignee FROM issue_component JOIN issue ON issue_component.issue_id = issue.issue_id WHERE issue_component.component = 'impl'  _EX _EM
 SELECT DISTINCT issue.assignee FROM issue_component JOIN issue ON issue_component.issue_id = issue.issue_id WHERE issue_component.component = 'impl' _EX _EM
-SELECT DISTINCT issue.assignee FROM issue JOIN issue_component ON issue.issue_id = issue_component.issue_id WHERE issue_component.component = 'impl' AND issue.resolution IS NOT NULL 
+SELECT DISTINCT assignee FROM issue as T1 JOIN issue_component as T2 ON T1.issue_id = T2.issue_id WHERE T2.component = "impl"  _EX _EM
 SELECT reporter, issue_id FROM issue ORDER BY reporter _EX _EM
 SELECT DISTINCT reporter_username AS developer, issue_id FROM issue ORDER BY developer, issue_id
 SELECT reporter, issue_id FROM issue 
@@ -398,7 +398,7 @@ SELECT issue_id, status FROM issue WHERE type = 'Bug' _EX _EM
 SELECT issue_id, status FROM issue WHERE type = 'bug' _EM
 SELECT issue_id, status FROM issue WHERE type = 'Bug' _EX _EM
 SELECT issue_id, resolution FROM issue WHERE type = 'Bug'  _EX _EM
-SELECT issue_id, resolution FROM issue WHERE type = 'Bug' AND resolution IS NOT NULL
+SELECT issue_id, resolution FROM issue WHERE type = 'Bug' _EX _EM
 SELECT issue_id, resolution FROM issue WHERE type = 'Bug'  _EX _EM
 SELECT issue.issue_id, issue.resolution FROM issue JOIN issue_fix_version ON issue.issue_id = issue_fix_version.issue_id WHERE issue.type = 'Bug' AND issue.project = 'Apache Pig' 
 SELECT issue_id, resolution FROM issue WHERE type = 'bug'  _EM
@@ -474,13 +474,13 @@ SELECT fix_version, COUNT(DISTINCT issue_id) FROM issue_fix_version JOIN issue O
 SELECT issue_fix_version.fix_version, COUNT(issue_fix_version.issue_id), GROUP_CONCAT(issue_fix_version.issue_id) FROM issue_fix_version JOIN issue ON issue_fix_version.issue_id = issue.issue_id WHERE issue.resolution IS NOT NULL GROUP BY issue_fix_version.fix_version
 SELECT fix_version, COUNT(issue_id) FROM issue_fix_version GROUP BY fix_version _EX _EM
 SELECT fix_version, COUNT(issue_id) FROM issue_fix_version GROUP BY fix_version _EX _EM
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1 _EX _EM
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1 _EX _EM
 SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1 _EX _EM
 SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY COUNT(issue_id) DESC LIMIT 1 _EX
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1 _EX _EM
 SELECT status FROM issue WHERE created_date = (SELECT MAX(created_date) FROM issue)  _EX
 SELECT status FROM issue ORDER BY created_date DESC LIMIT 1 _EX _EM
 SELECT status FROM issue ORDER BY created_date DESC LIMIT 1 _EX _EM
@@ -547,7 +547,7 @@ SELECT COUNT(*) FROM issue WHERE created_date >= '2015-01-01' AND created_date <
 SELECT created_date FROM issue GROUP BY created_date ORDER BY COUNT(*) DESC LIMIT 1 _EX
 SELECT created_date FROM issue GROUP BY created_date ORDER BY COUNT(*) DESC LIMIT 1 _EX
 SELECT created_date FROM issue GROUP BY created_date ORDER BY COUNT(*) DESC LIMIT 1 _EX
-SELECT created_date, COUNT(*) AS num_issues FROM issue GROUP BY created_date ORDER BY num_issues DESC LIMIT 1
+SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
 SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
 SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
 SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
@@ -557,7 +557,7 @@ SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY COUNT(*) DESC LI
 SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY COUNT(*) DESC LIMIT 1 _EX
 SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY COUNT(issue_id) DESC LIMIT 1 _EX _EM
 SELECT resolved_date, COUNT(issue_id) AS resolved_count FROM issue GROUP BY resolved_date ORDER BY resolved_count DESC LIMIT 1
-SELECT resolved_date, COUNT(issue_id) AS count_resolved FROM issue GROUP BY resolved_date ORDER BY count_resolved DESC LIMIT 1
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY Count(issue_id) DESC LIMIT 1 _EX _EM
 SELECT COUNT(*) FROM issue _EX _EM
 SELECT COUNT(*) FROM issue  _EX _EM
 SELECT COUNT(*) FROM issue _EX _EM
@@ -619,7 +619,7 @@ SELECT assignee, COUNT(issue_id) FROM issue GROUP BY assignee
 SELECT assignee, COUNT(issue_id) FROM issue GROUP BY assignee
 SELECT assignee, COUNT(*) AS assignee_count FROM issue WHERE project = 'Apache PIG' GROUP BY assignee ORDER BY assignee_count DESC
 SELECT assignee, COUNT(*) FROM issue GROUP BY assignee _EX _EM
-SELECT assignee, COUNT(*) AS assignee_count FROM issue GROUP BY assignee ORDER BY assignee_count DESC
+SELECT assignee, Count(*) FROM issue GROUP BY assignee _EX _EM
 SELECT assignee, COUNT(*) FROM issue GROUP BY assignee _EX _EM
 SELECT COUNT(DISTINCT assignee_username) FROM issue  _EX _EM
 SELECT issue_attachment.username, COUNT(*) AS count FROM issue_attachment JOIN issue ON issue_attachment.issue_id = issue.issue_id JOIN jira_repository ON issue_attachment.issue_id LIKE CONCAT(jira_repository.key, '-%') WHERE jira_repository.base_url LIKE '%Apache%Pig%' GROUP BY issue_attachment.username ORDER BY count DESC
@@ -629,7 +629,7 @@ SELECT COUNT(DISTINCT assignee_username) FROM issue  _EX _EM
 SELECT COUNT(DISTINCT assignee_username) FROM issue  _EX _EM
 SELECT COUNT(DISTINCT assignee_username) FROM issue  _EX _EM
 SELECT assignee_username, COUNT(*) FROM issue GROUP BY assignee_username _EX _EM
-SELECT assignee_username, COUNT(*) AS occurrences FROM issue GROUP BY assignee_username ORDER BY occurrences DESC
+SELECT assignee_username, Count(*) FROM issue GROUP BY assignee_username _EX _EM
 SELECT assignee_username, COUNT(issue_id) FROM issue GROUP BY assignee_username
 SELECT assignee_username, COUNT(issue_id) FROM issue GROUP BY assignee_username
 SELECT assignee_username, COUNT(*) FROM issue GROUP BY assignee_username _EX _EM
@@ -653,7 +653,7 @@ SELECT reporter, COUNT(*) FROM issue GROUP BY reporter _EX _EM
 SELECT reporter, COUNT(*) FROM issue GROUP BY reporter _EX _EM
 SELECT reporter, COUNT(issue_id) FROM issue GROUP BY reporter
 SELECT reporter, COUNT(issue_id) FROM issue GROUP BY reporter
-SELECT reporter, COUNT(*) AS mentions FROM issue GROUP BY reporter ORDER BY mentions DESC
+SELECT reporter, Count(*) FROM issue GROUP BY reporter _EX _EM
 SELECT reporter, COUNT(*) FROM issue GROUP BY reporter _EX _EM
 SELECT reporter, COUNT(*) FROM issue GROUP BY reporter _EX _EM
 SELECT COUNT(DISTINCT reporter_username) FROM issue  _EX _EM
@@ -664,8 +664,8 @@ SELECT reporter_username, COUNT(DISTINCT issue_id) AS frequency FROM issue GROUP
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username
 SELECT COUNT(DISTINCT reporter_username) FROM issue  _EX _EM
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username _EX _EM
-SELECT reporter_username AS username, COUNT(*) AS count FROM issue GROUP BY reporter_username ORDER BY count DESC
-SELECT reporter_username, COUNT(*) AS frequency FROM issue GROUP BY reporter_username ORDER BY frequency DESC
+SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username _EX _EM
+SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username _EX _EM
 SELECT username, COUNT(*) FROM issue GROUP BY username
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username _EX _EM
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username  _EX _EM
@@ -699,10 +699,10 @@ SELECT DISTINCT username FROM issue_comment  _EX _EM
 SELECT DISTINCT username FROM issue_comment  _EX _EM
 SELECT DISTINCT username FROM issue_comment  _EX _EM
 SELECT COUNT(DISTINCT component) FROM issue_component _EX _EM
+SELECT COUNT(DISTINCT component) FROM issue_component WHERE issue_id IN (  SELECT issue_id   FROM issue   WHERE project = 'Apache Pig' )
 SELECT COUNT(DISTINCT component) FROM issue_component  _EX _EM
-SELECT COUNT(DISTINCT component) FROM issue_component  _EX _EM
-SELECT COUNT(DISTINCT component) FROM issue_component  _EX _EM
-SELECT COUNT(DISTINCT component) FROM issue_component  _EX _EM
+SELECT COUNT(DISTINCT component) FROM issue_component WHERE issue_id IN (  SELECT issue_id   FROM issue   WHERE project = 'Apache Pig' )
+SELECT COUNT(DISTINCT component) FROM issue_component WHERE issue_id IN (  SELECT issue_id   FROM issue   WHERE project = 'Apache Pig' )
 SELECT COUNT(DISTINCT component) FROM issue_component WHERE issue_id IN ( SELECT issue_id  FROM issue  WHERE summary LIKE '%Apache Pig%' )
 SELECT COUNT(DISTINCT component) FROM issue_component _EX _EM
 SELECT component, COUNT(*) FROM issue_component GROUP BY component _EX
@@ -735,11 +735,11 @@ SELECT COUNT(*) FROM issue WHERE type = 'bug' _EM
 SELECT COUNT(*) FROM issue WHERE type = 'Bug' _EX _EM
 SELECT DISTINCT assignee FROM issue  _EX _EM
 SELECT DISTINCT assignee FROM issue _EX _EM
-SELECT DISTINCT assignee FROM issue _EX _EM
 SELECT DISTINCT assignee FROM issue  _EX _EM
-SELECT DISTINCT assignee FROM issue _EX _EM
-SELECT DISTINCT assignee FROM issue _EX _EM
-SELECT DISTINCT assignee FROM issue _EX _EM
+SELECT DISTINCT assignee FROM issue  _EX _EM
+SELECT DISTINCT assignee FROM issue  _EX _EM
+SELECT DISTINCT assignee FROM issue  _EX _EM
+SELECT DISTINCT assignee FROM issue  _EX _EM
 SELECT DISTINCT assignee_username FROM issue  _EX _EM
 SELECT DISTINCT assignee_username FROM issue  _EX _EM
 SELECT DISTINCT assignee_username FROM issue  _EX _EM
@@ -756,10 +756,10 @@ SELECT DISTINCT reporter FROM issue _EX _EM
 SELECT DISTINCT reporter FROM issue _EX _EM
 SELECT DISTINCT reporter_username FROM issue  _EX _EM
 SELECT DISTINCT reporter_username FROM issue WHERE type = 'Bug' 
-SELECT DISTINCT reporter_username FROM issue _EX _EM
 SELECT DISTINCT reporter_username FROM issue  _EX _EM
-SELECT DISTINCT reporter_username FROM issue _EX _EM
-SELECT DISTINCT reporter_username FROM issue _EX _EM
+SELECT DISTINCT reporter_username FROM issue  _EX _EM
+SELECT DISTINCT reporter_username FROM issue  _EX _EM
+SELECT DISTINCT reporter_username FROM issue  _EX _EM
 SELECT DISTINCT reporter_username FROM issue  _EX _EM
 SELECT DISTINCT author FROM change_set  _EX _EM
 SELECT cs.author FROM change_set AS cs JOIN git_repository AS gr ON cs.git_repository_id = gr.git_repository_id
@@ -775,10 +775,10 @@ SELECT username, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP B
 SELECT display_name, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name
 SELECT display_name, COUNT(message) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name _EX _EM
 SELECT display_name, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name
-SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue LEFT JOIN change_set_link ON issue.issue_id = change_set_link.issue_id LEFT JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash 
+SELECT T1.issue_id, T1.created_date, T1.resolved_date, T3.commit_hash, T3.committed_date FROM issue AS T1 JOIN change_set_link AS T2 ON T1.issue_id = T2.issue_id JOIN change_set AS T3 ON T2.commit_hash = T3.commit_hash  _EX _EM
 SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue JOIN change_set_link ON issue.issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash  _EX _EM
 SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue JOIN change_set_link ON issue.issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash  _EX _EM
-SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue LEFT JOIN change_set_link ON issue.issue_id = change_set_link.issue_id LEFT JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash 
+SELECT T1.issue_id, T1.created_date, T1.resolved_date, T3.commit_hash, T3.committed_date FROM issue AS T1 JOIN change_set_link AS T2 ON T1.issue_id = T2.issue_id JOIN change_set AS T3 ON T2.commit_hash = T3.commit_hash  _EX _EM
 SELECT DISTINCT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue_link JOIN issue ON issue_link.target_issue_id = issue.issue_id JOIN change_set_link ON issue_link.source_issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash
 SELECT i.issue_id, i.created_date, i.resolved_date, c.commit_hash, c.committed_date FROM issue AS i JOIN change_set_link AS cl ON i.issue_id = cl.issue_id JOIN change_set AS c ON cl.commit_hash = c.commit_hash  _EX _EM
 SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue JOIN change_set_link ON issue.issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash _EX _EM
@@ -891,7 +891,7 @@ SELECT source.type, target.type, COUNT(*) FROM issue_link JOIN issue AS source O
 SELECT i.type, COUNT(*) FROM issue_link AS il JOIN issue AS i ON il.target_issue_id = i.issue_id WHERE il.name = 'cloners' GROUP BY i.type
 SELECT i1.type, i2.type, COUNT(*) AS count FROM issue_link AS il JOIN issue AS i1 ON il.source_issue_id = i1.issue_id JOIN issue AS i2 ON il.target_issue_id = i2.issue_id WHERE il.name = 'Cloner' GROUP BY i1.type, i2.type ORDER BY count DESC
 SELECT i.type, COUNT(*) FROM issue_link AS il JOIN issue AS i ON il.target_issue_id = i.issue_id WHERE il.name = 'cloners' GROUP BY i.type 
-SELECT source.type AS source_type, target.type AS target_type, COUNT(*) FROM issue_link JOIN issue AS source ON source.issue_id = issue_link.source_issue_id JOIN issue AS target ON target.issue_id = issue_link.target_issue_id WHERE issue_link.name = 'Cloners' GROUP BY source_type, target_type 
+SELECT T2.type, T3.type, Count(*) FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T1.name = "Cloners" GROUP BY T2.type, T3.type  _EX _EM
 SELECT i1.type, i2.type, COUNT(*) FROM issue_link AS il JOIN issue AS i1 ON il.source_issue_id = i1.issue_id JOIN issue AS i2 ON il.target_issue_id = i2.issue_id WHERE il.name = 'Cloners' GROUP BY i1.type, i2.type  _EX _EM
 SELECT source.type, target.type, COUNT(*) FROM issue_link JOIN issue AS source ON source.issue_id = issue_link.source_issue_id JOIN issue AS target ON target.issue_id = issue_link.target_issue_id WHERE issue_link.name = 'Cloners' GROUP BY source.type, target.type  _EX _EM
 SELECT source.type, target.type FROM issue_link JOIN issue AS source ON source.issue_id = issue_link.source_issue_id JOIN issue AS target ON target.issue_id = issue_link.target_issue_id WHERE issue_link.name = 'cloners'  _EM

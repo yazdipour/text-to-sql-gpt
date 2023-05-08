@@ -285,8 +285,7 @@ eval_err_num:5
 93 medium pred: SELECT reporter, Count(*) FROM issue GROUP BY reporter
 93 medium gold: SELECT reporter, Count(*) FROM issue GROUP BY reporter
 
-eval_err_num:6
-94 easy pred: SELECT reporter_username, COUNT(*) AS frequency FROM issue GROUP BY reporter_username ORDER BY frequency DESC
+94 easy pred: SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username
 94 easy gold: SELECT Count(DISTINCT reporter_username) FROM issue
 
 95 medium pred: SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username
@@ -307,7 +306,7 @@ eval_err_num:6
 100 easy pred: SELECT COUNT(DISTINCT component) FROM issue_component
 100 easy gold: SELECT Count(DISTINCT component) FROM issue_component
 
-eval_err_num:7
+eval_err_num:6
 101 medium pred: SELECT ic.component, COUNT(*) AS mentions FROM issue_component ic JOIN issue AS i ON ic.issue_id = i.issue_id WHERE ic.component IS NOT NULL GROUP BY ic.component ORDER BY mentions DESC
 101 medium gold: SELECT T2.component, Count(*) FROM issue AS T1 JOIN issue_component AS T2 ON T1.issue_id = T2.issue_id GROUP BY T2.component
 
@@ -368,7 +367,7 @@ eval_err_num:7
 120 extra pred: SELECT DISTINCT change_set.commit_hash FROM change_set JOIN issue ON change_set.commit_hash = issue_fix_version.issue_id WHERE issue.issue_id = 'PIG-3592' AND change_set.committed_date >= issue.created_date AND change_set.committed_date <= issue.resolved_date
 120 extra gold: SELECT commit_hash FROM change_set WHERE committed_date >= (SELECT created_date FROM issue WHERE issue_id = 'PIG-3592') AND committed_date <= (SELECT resolved_date FROM issue WHERE issue_id = 'PIG-3592')
 
-eval_err_num:8
+eval_err_num:7
 121 extra pred: ERROR
 121 extra gold: SELECT type, Count(*) FROM issue GROUP BY type HAVING type = 'Bug' OR type = 'Improvement'
 
@@ -381,14 +380,14 @@ eval_err_num:8
 124 extra pred: SELECT COUNT(*) FROM issue_link WHERE source_issue_id IN (   SELECT issue_id   FROM issue   WHERE type = 'bug' ) WHERE target_issue_id IN (   SELECT issue_id   FROM issue   WHERE type = 'improvement' )
 124 extra gold: SELECT Count(*) FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T2.type = 'Bug' and T3.type = 'Improvement' GROUP BY T2.type, T3.type
 
-eval_err_num:9
+eval_err_num:8
 125 extra pred: SELECT il.source_issue_id, il.target_issue_id FROM issue_link il JOIN issue AS i1 ON il.source_issue_id = i1.issue_id AND i1.type = 'bug' JOIN issue AS i2 ON il.target_issue_id = i2.issue_id AND i2.type = 'improvement'
 125 extra gold: SELECT T1.source_issue_id, T1.target_issue_id FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T2.type = 'Improvement' AND T3.type = 'Bug' ORDER BY T1.source_issue_id DESC
 
 126 easy pred: SELECT DISTINCT name FROM issue_link WHERE source_issue_id IN (   SELECT issue_id   FROM issue   WHERE type = 'apache pig' )
 126 easy gold: SELECT DISTINCT name FROM issue_link
 
-eval_err_num:10
+eval_err_num:9
 127 extra pred: SELECT source.type AS source_type, target.type AS target_type, COUNT(*) FROM issue_link JOIN issue AS source ON issue_link.source_issue_id = source.issue_id JOIN issue AS target ON issue_link.target_issue_id = target.issue_id WHERE issue_link.name = 'Cloners' GROUP BY source_type, target_type
 127 extra gold: SELECT T2.type, T3.type, Count(*) FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T1.name = "Cloners" GROUP BY T2.type, T3.type
 
@@ -404,7 +403,7 @@ eval_err_num:10
 131 hard pred: SELECT * FROM issue WHERE status != 'In Progress'
 131 hard gold: SELECT * FROM issue EXCEPT SELECT * FROM issue WHERE issue.status = 'In Progress'
 
-eval_err_num:11
+eval_err_num:10
 132 extra pred: SELECT MAX(num_file_paths) FROM (  SELECT COUNT(DISTINCT cc.file_path) AS num_file_paths  FROM issue i  JOIN issue_fix_version AS ifv ON i.issue_id = ifv.issue_id  JOIN change_set_link AS csl ON i.issue_id = csl.issue_id  JOIN change_set AS cs ON csl.commit_hash = cs.commit_hash  JOIN code_change AS cc ON cs.commit_hash = cc.commit_hash  WHERE
 132 extra gold: SELECT Count(file_path) FROM code_change AS T1 JOIN change_set_link AS T2 ON T1.commit_hash = T2.commit_hash JOIN issue AS T3 ON T2.issue_id = T3.issue_id WHERE T3.type = 'Improvement' GROUP BY T3.issue_id ORDER BY Count(file_path) DESC LIMIT 1
 
@@ -417,16 +416,16 @@ execution            0.804                0.611                0.636            
 exact match          0.750                0.685                0.545                0.333                0.669               
 
 ---------------------PARTIAL MATCHING ACCURACY----------------------
-select               0.873                0.900                1.000                0.857                0.893               
-select(no AGG)       0.873                0.900                1.000                0.857                0.893               
+select               0.857                0.900                1.000                0.857                0.886               
+select(no AGG)       0.857                0.900                1.000                0.857                0.886               
 where                0.769                0.786                0.333                0.714                0.731               
 where(no OP)         0.769                0.786                0.500                0.714                0.746               
-group(no Having)     0.250                1.000                1.000                1.000                0.903               
-group                0.250                1.000                1.000                1.000                0.903               
+group(no Having)     0.200                1.000                1.000                1.000                0.875               
+group                0.200                1.000                1.000                1.000                0.875               
 order                0.000                0.667                1.000                1.000                0.900               
 and/or               1.000                0.981                0.909                0.833                0.969               
 IUEN                 0.000                0.000                0.000                0.000                0.000               
-keywords             0.833                0.915                0.700                0.714                0.851               
+keywords             0.806                0.915                0.700                0.714                0.842               
 ---------------------- PARTIAL MATCHING RECALL ----------------------
 select               0.857                0.833                0.909                0.500                0.820               
 select(no AGG)       0.857                0.833                0.909                0.500                0.820               
@@ -439,13 +438,13 @@ and/or               0.929                0.962                1.000            
 IUEN                 0.000                0.000                0.000                0.000                0.000               
 keywords             1.000                0.843                0.636                0.417                0.808               
 ---------------------- PARTIAL MATCHING F1 --------------------------
-select               0.865                0.865                0.952                0.632                0.855               
-select(no AGG)       0.865                0.865                0.952                0.632                0.855               
+select               0.857                0.865                0.952                0.632                0.852               
+select(no AGG)       0.857                0.865                0.952                0.632                0.852               
 where                0.800                0.786                0.364                0.556                0.726               
 where(no OP)         0.800                0.786                0.545                0.556                0.741               
-group(no Having)     0.400                0.936                0.889                0.286                0.824               
-group                0.400                0.936                0.889                0.286                0.824               
+group(no Having)     0.333                0.936                0.889                0.286                0.812               
+group                0.333                0.936                0.889                0.286                0.812               
 order                1.000                0.571                0.889                0.667                0.720               
 and/or               0.963                0.971                0.952                0.909                0.961               
 IUEN                 1.000                1.000                1.000                1.000                1.000               
-keywords             0.909                0.878                0.667                0.526                0.829               
+keywords             0.893                0.878                0.667                0.526                0.825               

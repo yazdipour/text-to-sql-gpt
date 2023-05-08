@@ -156,9 +156,9 @@ SELECT author, COUNT(*) FROM change_set GROUP BY author	apache-pig
 SELECT change_set.author, COUNT(*) AS mentions FROM change_set JOIN change_set_link ON change_set.commit_hash = change_set_link.commit_hash JOIN issue ON change_set_link.issue_id = issue.issue_id WHERE issue.description LIKE '%' || change_set.author || '%' GROUP BY change_set.author ORDER BY mentions DESC	apache-pig
 SELECT author, COUNT(*) FROM change_set GROUP BY author 	apache-pig
 SELECT author, COUNT(*) FROM change_set GROUP BY author	apache-pig
-SELECT author, COUNT(*) FROM change_set GROUP BY author ORDER BY commit_count DESC	apache-pig
-SELECT author, COUNT(*) FROM change_set GROUP BY author ORDER BY commit_count DESC	apache-pig
-SELECT author, COUNT(*) AS mentions FROM change_set GROUP BY author ORDER BY mentions DESC	apache-pig
+SELECT author, COUNT(*) FROM change_set GROUP BY author	apache-pig
+SELECT author, COUNT(*) FROM change_set GROUP BY author	apache-pig
+SELECT author, Count(*) FROM change_set GROUP BY author	apache-pig
 SELECT commit_hash, message FROM change_set 	apache-pig
 SELECT commit_hash, message FROM change_set 	apache-pig
 SELECT commit_hash, message FROM change_set 	apache-pig
@@ -184,7 +184,7 @@ SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1	apache-pig
 SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1	apache-pig
 SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1	apache-pig
 SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1	apache-pig
-SELECT issue.type, COUNT(*) AS mentions FROM issue GROUP BY issue.type ORDER BY mentions DESC LIMIT 1	apache-pig
+SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1	apache-pig
 SELECT type FROM issue GROUP BY type ORDER BY Count(*) DESC LIMIT 1	apache-pig
 SELECT issue.type, COUNT(*) AS count FROM issue GROUP BY issue.type ORDER BY count DESC LIMIT 1	apache-pig
 SELECT COUNT(*)  FROM issue  WHERE priority = 'Blocker' OR priority = 'Critical' 	apache-pig
@@ -194,13 +194,13 @@ SELECT COUNT(*)  FROM issue  WHERE priority = 'Blocker' OR priority = 'Critical'
 SELECT COUNT(*)  FROM issue  WHERE priority = 'Blocker' OR priority = 'Critical'	apache-pig
 SELECT COUNT(*)  FROM issue  WHERE priority = 'Blocker' OR priority = 'Critical' 	apache-pig
 SELECT COUNT(*) FROM issue WHERE priority = 'Blocker' OR priority = 'Critical'	apache-pig
-SELECT file_path, COUNT(commit_hash) AS commit_count FROM code_change GROUP BY file_path ORDER BY commit_count DESC LIMIT 5	apache-pig
-SELECT file_path, COUNT(commit_hash) AS commit_count FROM code_change GROUP BY file_path ORDER BY commit_count DESC LIMIT 5	apache-pig
+SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5	apache-pig
+SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5	apache-pig
 SELECT file_path, SUM(sum_added_lines + sum_removed_lines) AS total_changes FROM code_change GROUP BY file_path ORDER BY total_changes DESC LIMIT 5	apache-pig
 SELECT file_path, SUM(sum_added_lines + sum_removed_lines) AS num_changes FROM code_change GROUP BY file_path ORDER BY num_changes DESC LIMIT 5	apache-pig
 SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5	apache-pig
 SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5	apache-pig
-SELECT file_path, COUNT(commit_hash) AS commit_count FROM code_change GROUP BY file_path ORDER BY commit_count DESC LIMIT 5	apache-pig
+SELECT file_path, Count(commit_hash) FROM code_change GROUP BY file_path ORDER BY Count(*) DESC LIMIT 5	apache-pig
 SELECT assignee FROM issue GROUP BY assignee HAVING COUNT(DISTINCT issue_id) = 1 	apache-pig
 SELECT assignee, COUNT(*) FROM issue GROUP BY assignee HAVING COUNT(*) = 1	apache-pig
 SELECT DISTINCT assignee AS developer_name FROM issue WHERE assignee IS NOT NULL GROUP BY assignee HAVING COUNT(DISTINCT issue_id) = 1	apache-pig
@@ -298,7 +298,7 @@ SELECT DISTINCT(issue_attachment.username) AS developer_name FROM issue_attachme
 SELECT DISTINCT assignee_username FROM issue JOIN issue_component ON issue.issue_id = issue_component.issue_id WHERE component = 'imp' AND assignee_username IN (    SELECT username     FROM meta     WHERE key = 'group' AND value = 'developers' )	apache-pig
 SELECT DISTINCT issue.assignee FROM issue_component JOIN issue ON issue_component.issue_id = issue.issue_id WHERE issue_component.component = 'impl' 	apache-pig
 SELECT DISTINCT issue.assignee FROM issue_component JOIN issue ON issue_component.issue_id = issue.issue_id WHERE issue_component.component = 'impl'	apache-pig
-SELECT DISTINCT issue.assignee FROM issue JOIN issue_component ON issue.issue_id = issue_component.issue_id WHERE issue_component.component = 'impl' AND issue.resolution IS NOT NULL 	apache-pig
+SELECT DISTINCT assignee FROM issue as T1 JOIN issue_component as T2 ON T1.issue_id = T2.issue_id WHERE T2.component = "impl" 	apache-pig
 SELECT reporter, issue_id FROM issue ORDER BY reporter	apache-pig
 SELECT DISTINCT reporter_username AS developer, issue_id FROM issue ORDER BY developer, issue_id	apache-pig
 SELECT reporter, issue_id FROM issue WHERE reporter IS NOT NULL 	apache-pig
@@ -398,7 +398,7 @@ SELECT issue_id, status FROM issue WHERE type = 'Bug'	apache-pig
 SELECT issue_id, status FROM issue WHERE type = 'bug'	apache-pig
 SELECT issue_id, status FROM issue WHERE type = 'Bug'	apache-pig
 SELECT issue_id, resolution FROM issue WHERE type = 'Bug' 	apache-pig
-SELECT issue_id, resolution FROM issue WHERE type = 'Bug' AND resolution IS NOT NULL	apache-pig
+SELECT issue_id, resolution FROM issue WHERE type = 'Bug'	apache-pig
 SELECT issue_id, resolution FROM issue WHERE type = 'Bug' 	apache-pig
 SELECT issue.issue_id, issue.resolution FROM issue INNER JOIN issue_fix_version ON issue.issue_id = issue_fix_version.issue_id WHERE issue.type = 'Bug' AND issue.project = 'Apache Pig' 	apache-pig
 SELECT issue_id, resolution FROM issue WHERE type = 'bug' 	apache-pig
@@ -474,13 +474,13 @@ SELECT fix_version, COUNT(DISTINCT issue_id) AS resolved_issues_count FROM issue
 SELECT issue_fix_version.fix_version, COUNT(issue_fix_version.issue_id) AS num_resolved_issues, GROUP_CONCAT(issue_fix_version.issue_id) AS resolved_issue_ids FROM issue_fix_version JOIN issue ON issue_fix_version.issue_id = issue.issue_id WHERE issue.resolution IS NOT NULL GROUP BY issue_fix_version.fix_version	apache-pig
 SELECT fix_version, COUNT(issue_id) AS issue_count FROM issue_fix_version GROUP BY fix_version	apache-pig
 SELECT fix_version, COUNT(issue_id) AS issue_count FROM issue_fix_version GROUP BY fix_version	apache-pig
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1	apache-pig
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1	apache-pig
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1	apache-pig
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1	apache-pig
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1	apache-pig
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1	apache-pig
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1	apache-pig
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1	apache-pig
 SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1	apache-pig
 SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY COUNT(issue_id) DESC LIMIT 1	apache-pig
-SELECT fix_version, COUNT(issue_id) AS num_fixed_issues FROM issue_fix_version GROUP BY fix_version ORDER BY num_fixed_issues DESC LIMIT 1	apache-pig
+SELECT fix_version FROM issue_fix_version GROUP BY fix_version ORDER BY Count(*) DESC LIMIT 1	apache-pig
 SELECT status FROM issue WHERE created_date = (SELECT MAX(created_date) FROM issue) 	apache-pig
 SELECT status FROM issue ORDER BY created_date DESC LIMIT 1	apache-pig
 SELECT status  FROM issue  ORDER BY created_date DESC  LIMIT 1	apache-pig
@@ -547,7 +547,7 @@ SELECT COUNT(*)  FROM issue  WHERE created_date >= '2015-01-01' AND created_date
 SELECT created_date FROM issue GROUP BY created_date ORDER BY COUNT(*) DESC LIMIT 1	apache-pig
 SELECT created_date FROM issue GROUP BY created_date ORDER BY COUNT(*) DESC LIMIT 1	apache-pig
 SELECT created_date FROM issue GROUP BY created_date ORDER BY COUNT(*) DESC LIMIT 1	apache-pig
-SELECT created_date, COUNT(*) AS num_issues FROM issue GROUP BY created_date ORDER BY num_issues DESC LIMIT 1	apache-pig
+SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1	apache-pig
 SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1	apache-pig
 SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1	apache-pig
 SELECT created_date FROM issue GROUP BY created_date ORDER BY Count(issue_id) DESC LIMIT 1	apache-pig
@@ -557,7 +557,7 @@ SELECT resolved_date FROM issue WHERE resolved_date IS NOT NULL GROUP BY resolve
 SELECT resolved_date FROM issue WHERE resolution IS NOT NULL GROUP BY resolved_date ORDER BY COUNT(*) DESC LIMIT 1	apache-pig
 SELECT resolved_date FROM issue WHERE resolved_date IS NOT NULL GROUP BY resolved_date ORDER BY COUNT(issue_id) DESC LIMIT 1	apache-pig
 SELECT resolved_date, COUNT(issue_id) AS resolved_count FROM issue WHERE resolved_date IS NOT NULL GROUP BY resolved_date ORDER BY resolved_count DESC LIMIT 1	apache-pig
-SELECT resolved_date, COUNT(issue_id) AS count_resolved FROM issue WHERE resolved_date IS NOT NULL GROUP BY resolved_date ORDER BY count_resolved DESC LIMIT 1	apache-pig
+SELECT resolved_date FROM issue GROUP BY resolved_date ORDER BY Count(issue_id) DESC LIMIT 1	apache-pig
 SELECT COUNT(*) FROM issue	apache-pig
 SELECT COUNT(*) FROM issue 	apache-pig
 SELECT COUNT(*) FROM issue	apache-pig
@@ -619,7 +619,7 @@ SELECT assignee, COUNT(issue_id) AS issue_count FROM issue GROUP BY assignee	apa
 SELECT assignee, COUNT(issue_id) AS num_issues FROM issue GROUP BY assignee	apache-pig
 SELECT assignee, COUNT(*) AS assignee_count FROM issue WHERE project = 'Apache PIG' GROUP BY assignee ORDER BY assignee_count DESC	apache-pig
 SELECT assignee, COUNT(*) FROM issue WHERE assignee IS NOT NULL GROUP BY assignee	apache-pig
-SELECT assignee, COUNT(*) AS assignee_count FROM issue GROUP BY assignee ORDER BY assignee_count DESC	apache-pig
+SELECT assignee, Count(*) FROM issue GROUP BY assignee	apache-pig
 SELECT assignee, COUNT(*) FROM issue GROUP BY assignee	apache-pig
 SELECT COUNT(DISTINCT assignee_username)  FROM issue 	apache-pig
 SELECT issue_attachment.username, COUNT(*) AS count FROM issue_attachment JOIN issue ON issue_attachment.issue_id = issue.issue_id JOIN jira_repository ON issue_attachment.issue_id LIKE CONCAT(jira_repository.key, '-%') WHERE jira_repository.base_url LIKE '%Apache%Pig%' GROUP BY issue_attachment.username ORDER BY count DESC	apache-pig
@@ -629,7 +629,7 @@ SELECT COUNT(DISTINCT assignee_username) AS num_assignees FROM issue 	apache-pig
 SELECT COUNT(DISTINCT assignee_username) AS unique_assignees FROM issue 	apache-pig
 SELECT COUNT(DISTINCT assignee_username)  FROM issue 	apache-pig
 SELECT assignee_username, COUNT(*) FROM issue WHERE assignee_username IS NOT NULL GROUP BY assignee_username	apache-pig
-SELECT assignee_username, COUNT(*) AS occurrences FROM issue GROUP BY assignee_username ORDER BY occurrences DESC	apache-pig
+SELECT assignee_username, Count(*) FROM issue GROUP BY assignee_username	apache-pig
 SELECT assignee_username, COUNT(issue_id) AS issue_count FROM issue GROUP BY assignee_username	apache-pig
 SELECT assignee_username, COUNT(issue_id) AS issue_count FROM issue GROUP BY assignee_username	apache-pig
 SELECT assignee_username, COUNT(*) FROM issue GROUP BY assignee_username	apache-pig
@@ -653,7 +653,7 @@ SELECT reporter, COUNT(*) FROM issue GROUP BY reporter	apache-pig
 SELECT reporter, COUNT(*) FROM issue GROUP BY reporter	apache-pig
 SELECT reporter, COUNT(issue_id) AS issue_count FROM issue GROUP BY reporter	apache-pig
 SELECT reporter, COUNT(issue_id) AS num_issues FROM issue GROUP BY reporter	apache-pig
-SELECT reporter, COUNT(*) AS mentions FROM issue GROUP BY reporter ORDER BY mentions DESC	apache-pig
+SELECT reporter, Count(*) FROM issue GROUP BY reporter	apache-pig
 SELECT reporter, COUNT(*) FROM issue GROUP BY reporter	apache-pig
 SELECT reporter, COUNT(*) FROM issue GROUP BY reporter	apache-pig
 SELECT COUNT(DISTINCT reporter_username)  FROM issue 	apache-pig
@@ -664,8 +664,8 @@ SELECT reporter_username, COUNT(DISTINCT issue_id) AS frequency FROM issue GROUP
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username	apache-pig
 SELECT COUNT(DISTINCT reporter_username) FROM issue 	apache-pig
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username	apache-pig
-SELECT reporter_username AS username, COUNT(*) AS count FROM issue GROUP BY reporter_username ORDER BY count DESC	apache-pig
-SELECT reporter_username, COUNT(*) AS frequency FROM issue GROUP BY reporter_username ORDER BY frequency DESC	apache-pig
+SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username	apache-pig
+SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username	apache-pig
 SELECT username, COUNT(*) FROM issue GROUP BY username	apache-pig
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username	apache-pig
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username 	apache-pig
@@ -775,10 +775,10 @@ SELECT username, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP B
 SELECT display_name, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name	apache-pig
 SELECT display_name, COUNT(message) AS message_count FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name	apache-pig
 SELECT display_name, COUNT(*) FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY display_name	apache-pig
-SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue LEFT JOIN change_set_link ON issue.issue_id = change_set_link.issue_id LEFT JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash 	apache-pig
+SELECT T1.issue_id, T1.created_date, T1.resolved_date, T3.commit_hash, T3.committed_date FROM issue AS T1 JOIN change_set_link AS T2 ON T1.issue_id = T2.issue_id JOIN change_set AS T3 ON T2.commit_hash = T3.commit_hash 	apache-pig
 SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue JOIN change_set_link ON issue.issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash 	apache-pig
 SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue JOIN change_set_link ON issue.issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash 	apache-pig
-SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue LEFT JOIN change_set_link ON issue.issue_id = change_set_link.issue_id LEFT JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash 	apache-pig
+SELECT T1.issue_id, T1.created_date, T1.resolved_date, T3.commit_hash, T3.committed_date FROM issue AS T1 JOIN change_set_link AS T2 ON T1.issue_id = T2.issue_id JOIN change_set AS T3 ON T2.commit_hash = T3.commit_hash 	apache-pig
 SELECT DISTINCT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue_link JOIN issue ON issue_link.target_issue_id = issue.issue_id JOIN change_set_link ON issue_link.source_issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash	apache-pig
 SELECT i.issue_id, i.created_date, i.resolved_date, c.commit_hash, c.committed_date FROM issue AS i JOIN change_set_link AS cl ON i.issue_id = cl.issue_id JOIN change_set AS c ON cl.commit_hash = c.commit_hash 	apache-pig
 SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue JOIN change_set_link ON issue.issue_id = change_set_link.issue_id JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash	apache-pig
@@ -891,7 +891,7 @@ SELECT source.type AS source_type, target.type AS target_type, COUNT(*) FROM iss
 SELECT i.type, COUNT(*) FROM issue_link AS il JOIN issue AS i ON il.target_issue_id = i.issue_id WHERE il.name = 'cloners' GROUP BY i.type	apache-pig
 SELECT i1.type, i2.type, COUNT(*) AS count FROM issue_link AS il JOIN issue AS i1 ON il.source_issue_id = i1.issue_id JOIN issue AS i2 ON il.target_issue_id = i2.issue_id WHERE il.name = 'Cloner' GROUP BY i1.type, i2.type ORDER BY count DESC	apache-pig
 SELECT i.type, COUNT(*) FROM issue_link AS il JOIN issue AS i ON il.target_issue_id = i.issue_id WHERE il.name = 'cloners' GROUP BY i.type 	apache-pig
-SELECT source.type AS source_type, target.type AS target_type, COUNT(*) FROM issue_link JOIN issue AS source ON source.issue_id = issue_link.source_issue_id JOIN issue AS target ON target.issue_id = issue_link.target_issue_id WHERE issue_link.name = 'Cloners' GROUP BY source_type, target_type 	apache-pig
+SELECT T2.type, T3.type, Count(*) FROM issue_link AS T1 JOIN issue AS T2 ON T1.source_issue_id = T2.issue_id JOIN issue AS T3 ON T1.target_issue_id = T3.issue_id WHERE T1.name = "Cloners" GROUP BY T2.type, T3.type 	apache-pig
 SELECT i1.type AS source_type, i2.type AS target_type, COUNT(*) FROM issue_link AS il JOIN issue AS i1 ON il.source_issue_id = i1.issue_id JOIN issue AS i2 ON il.target_issue_id = i2.issue_id WHERE il.name = 'Cloners' GROUP BY i1.type, i2.type 	apache-pig
 SELECT source.type AS source_type, target.type AS target_type, COUNT(*) FROM issue_link JOIN issue AS source ON source.issue_id = issue_link.source_issue_id JOIN issue AS target ON target.issue_id = issue_link.target_issue_id WHERE issue_link.name = 'Cloners' GROUP BY source.type, target.type 	apache-pig
 SELECT source.type AS source_issue_type, target.type AS target_issue_type FROM issue_link JOIN issue AS source ON source.issue_id = issue_link.source_issue_id JOIN issue AS target ON target.issue_id = issue_link.target_issue_id WHERE issue_link.name = 'cloners' 	apache-pig

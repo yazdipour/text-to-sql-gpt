@@ -92,7 +92,7 @@ SELECT assignee_username, Count(*) FROM issue GROUP BY assignee_username	apache-
 SELECT COUNT(DISTINCT reporter) AS unique_reporters FROM issue WHERE reporter IS NOT NULL	apache-pig
 SELECT username, COUNT(*) AS num_comments FROM issue_comment GROUP BY username	apache-pig
 SELECT reporter, Count(*) FROM issue GROUP BY reporter	apache-pig
-SELECT reporter_username, COUNT(*) AS frequency FROM issue GROUP BY reporter_username ORDER BY frequency DESC	apache-pig
+SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username	apache-pig
 SELECT reporter_username, COUNT(*) AS count_issues FROM issue WHERE reporter_username IS NOT NULL GROUP BY reporter_username	apache-pig
 SELECT COUNT(*) AS commit_count FROM change_set	apache-pig
 SELECT COUNT(DISTINCT author) AS num_authors FROM change_set	apache-pig
@@ -188,7 +188,7 @@ SELECT issue_id FROM issue WHERE resolved_date >= '2017-10-01' AND resolved_date
 SELECT issue_id FROM issue WHERE created_date >= '2017-01-01' AND created_date <= '2017-03-31'	apache-pig
 SELECT issue_id, type, priority FROM issue WHERE status = 'Open' AND created_date >= '2013-11-16' AND created_date <= '2013-11-28' ORDER BY type, priority	apache-pig
 SELECT issue_id, status FROM issue WHERE type = 'Bug' AND project = 'Apache Pig'	apache-pig
-SELECT issue_id, resolution FROM issue WHERE type = 'Bug' AND resolution IS NOT NULL	apache-pig
+SELECT issue_id, resolution FROM issue WHERE type = 'Bug'	apache-pig
 SELECT type FROM issue WHERE issue_id = 'PIG-3599'	apache-pig
 SELECT resolved_date FROM issue WHERE issue_id = 'PIG-3599'	apache-pig
 SELECT * FROM issue	apache-pig
@@ -242,7 +242,7 @@ SELECT DISTINCT reporter FROM issue	apache-pig
 SELECT DISTINCT reporter_username FROM issue WHERE reporter_username IS NOT NULL	apache-pig
 SELECT DISTINCT author FROM change_set	apache-pig
 SELECT username, COUNT(*) AS comment_count FROM issue_comment WHERE issue_id = 'PIG-3592' GROUP BY username	apache-pig
-SELECT issue.issue_id, issue.created_date, issue.resolved_date, change_set.commit_hash, change_set.committed_date FROM issue LEFT JOIN change_set_link ON issue.issue_id = change_set_link.issue_id LEFT JOIN change_set ON change_set_link.commit_hash = change_set.commit_hash	apache-pig
+SELECT T1.issue_id, T1.created_date, T1.resolved_date, T3.commit_hash, T3.committed_date FROM issue AS T1 JOIN change_set_link AS T2 ON T1.issue_id = T2.issue_id JOIN change_set AS T3 ON T2.commit_hash = T3.commit_hash	apache-pig
 SELECT DISTINCT issue.issue_id FROM issue JOIN issue_link ON issue.issue_id = issue_link.source_issue_id JOIN change_set_link ON issue_link.target_issue_id = change_set_link.issue_id	apache-pig
 SELECT COUNT(DISTINCT commit_hash)  FROM change_set  WHERE commit_hash NOT IN (SELECT commit_hash FROM change_set_link)	apache-pig
 SELECT COUNT(DISTINCT issue_id)  FROM change_set_link  GROUP BY issue_id  HAVING COUNT(commit_hash) > 1	apache-pig

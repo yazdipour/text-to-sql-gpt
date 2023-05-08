@@ -92,7 +92,7 @@ SELECT assignee_username, Count(*) FROM issue GROUP BY assignee_username _EX _EM
 SELECT COUNT(DISTINCT reporter) FROM issue _EX _EM
 SELECT username, COUNT(*) FROM issue_comment GROUP BY username _EX _EM
 SELECT reporter, Count(*) FROM issue GROUP BY reporter _EX _EM
-SELECT reporter_username, COUNT(*) AS frequency FROM issue GROUP BY reporter_username ORDER BY frequency DESC
+SELECT reporter_username, Count(*) FROM issue GROUP BY reporter_username
 SELECT reporter_username, COUNT(*) FROM issue GROUP BY reporter_username _EX _EM
 SELECT COUNT(*) FROM change_set _EX _EM
 SELECT COUNT(DISTINCT author) FROM change_set _EX _EM
